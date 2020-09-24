@@ -21,7 +21,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         if (arguments != null) {
             val usernameTextView: TextView = view.findViewById(R.id.textViewUsername)
             val username = HomeFragmentArgs.fromBundle(requireArguments()).username
