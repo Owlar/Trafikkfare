@@ -7,4 +7,8 @@
     <string name="welcome">Welcome</string>
     <string name="myLocation">My Location</string>
     <string name="map">Map</string>
+    <string name="danger_title">DangerTitle</string>
+    <string name="danger_description">Dangerous</string>
+    <string name="danger_poster">DangerPoster</string>
+    <string name="danger">Fare</string>
 </resources>

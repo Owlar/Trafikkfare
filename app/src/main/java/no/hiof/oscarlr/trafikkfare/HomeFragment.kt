@@ -6,10 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
+import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_login.*
 
 class HomeFragment : Fragment() {
+
+    private lateinit var supportFragmentManager : FragmentManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +38,18 @@ class HomeFragment : Fragment() {
                 val intent = Intent(activity, MapActivity::class.java)
                 startActivity(intent)
             }
+
+            dangersButton.setOnClickListener {
+                val usernameFromTextView = textViewUsername.text.toString()
+
+                if (usernameFromTextView.isNotEmpty()) {
+                    val action = HomeFragmentDirections.actionSeeDangers(usernameFromTextView)
+                    it.findNavController().navigate(action)
+                }
+                else
+                    Toast.makeText(it.context, "Something went wrong", Toast.LENGTH_LONG).show()
+            }
+
         }
     }
 }

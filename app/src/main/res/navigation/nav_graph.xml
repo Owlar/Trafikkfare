@@ -24,6 +24,32 @@
         android:name="username"
         app:argType="string"
         android:defaultValue="Username" />
+        <action
+            android:id="@+id/action_see_dangers"
+            app:destination="@+id/dangers" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dangers"
+        android:name="no.hiof.oscarlr.trafikkfare.DangerListFragment"
+        android:label="fragment_danger_list">
+        <argument
+            android:name="username"
+            app:argType="string"
+            android:defaultValue="Username" />
+        <action
+            android:id="@+id/action_dangers_to_dangerDetailFragment"
+            app:destination="@id/dangerDetailFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/dangerDetailFragment"
+        android:name="no.hiof.oscarlr.trafikkfare.DangerDetailFragment"
+        android:label="fragment_danger_detail"
+        tools:layout="@layout/fragment_danger_detail" >
+        <argument
+            android:name="uid"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

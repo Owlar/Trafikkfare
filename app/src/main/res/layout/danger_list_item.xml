@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    tool:cardCornerRadius="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/dangerPosterImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/danger_poster"
+            android:scaleType="fitCenter"
+            android:layout_margin="4dp"
+            tool:layout_constraintEnd_toEndOf="parent"
+            tool:layout_constraintStart_toStartOf="parent"
+            tool:layout_constraintTop_toTopOf="parent"
+            tool:layout_constraintBottom_toTopOf="@id/dangerTitleTextView"
+            tools:srcCompat="@drawable/danger" />
+
+        <TextView
+            android:id="@+id/dangerTitleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/danger_title"
+            android:textColor="#a31717"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tool:layout_constraintBottom_toBottomOf="parent"
+            tool:layout_constraintEnd_toEndOf="parent"
+            tool:layout_constraintStart_toStartOf="parent"
+            tool:layout_constraintTop_toBottomOf="@id/dangerPosterImageView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

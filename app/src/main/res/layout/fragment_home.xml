@@ -53,4 +53,16 @@
         app:layout_constraintStart_toStartOf="@+id/textViewWelcome"
         app:layout_constraintTop_toBottomOf="@+id/textViewWelcome" />
 
+    <Button
+        android:id="@+id/dangersButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/danger"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/userLocationButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/userLocationButton"
+        app:layout_constraintTop_toBottomOf="@+id/userLocationButton" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
