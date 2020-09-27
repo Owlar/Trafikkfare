@@ -56,7 +56,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             googleMap.addMarker(MarkerOptions()
                 .title("Fare!").position(it).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger))
             )
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, ZOOM_LEVEL))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(it))
         }
     }
 
