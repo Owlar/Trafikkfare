@@ -8,13 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
-
-    private lateinit var supportFragmentManager : FragmentManager
 
     override fun onCreateView(
         inflater: LayoutInflater,

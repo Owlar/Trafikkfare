@@ -11,4 +11,6 @@
     <string name="danger_description">Dangerous</string>
     <string name="danger_poster">DangerPoster</string>
     <string name="danger">Fare</string>
+    <string name="submit">Submit</string>
+    <string name="red">#EA4335</string>
 </resources>
