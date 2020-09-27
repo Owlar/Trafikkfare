@@ -3,8 +3,6 @@ package no.hiof.oscarlr.trafikkfare
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -13,19 +11,20 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_map.*
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    val HALDEN = LatLng(59.12478, 11.38754)
-    val ZOOM_LEVEL = 13f
+    private val HALDEN = LatLng(59.12478, 11.38754)
+    private val ZOOM_LEVEL = 13f
 
-    lateinit var client : FusedLocationProviderClient
-    lateinit var mapFragment : SupportMapFragment
-    lateinit var markerOptions : MarkerOptions
-    lateinit var latLng : LatLng
+    private lateinit var client : FusedLocationProviderClient
+    private lateinit var mapFragment : SupportMapFragment
+    private lateinit var markerOptions : MarkerOptions
+    private lateinit var latLng : LatLng
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +46,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN, ZOOM_LEVEL))
             addMarker(MarkerOptions().position(HALDEN))
         }
+        googleMap.setOnMapClickListener {
+            googleMap.addMarker(MarkerOptions()
+                .title("Fare!").position(it).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger))
+            )
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, ZOOM_LEVEL))
+        }
     }
 
     private fun getUserPosition() {
@@ -59,9 +64,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                             .title("I am here")
                         it.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_LEVEL))
                         it.addMarker(markerOptions)
-
-                        //val toast = Toast.makeText(this, location.latitude.toString() + ", " + location.longitude.toString(), LENGTH_LONG)
-                        //toast.show()
                     }
                 }
             }

@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_danger_detail.*
-import kotlinx.android.synthetic.main.danger_list_item.*
 import kotlinx.android.synthetic.main.danger_list_item.dangerPosterImageView
 import kotlinx.android.synthetic.main.danger_list_item.dangerTitleTextView
+import kotlinx.android.synthetic.main.fragment_danger_detail.*
 import no.hiof.oscarlr.trafikkfare.model.Danger
 
 /* Source: https://github.com/larseknu/mobilprogrammering2019/tree/master/Lecture05_RecyclerView/AfterLecture_Kotlin */
