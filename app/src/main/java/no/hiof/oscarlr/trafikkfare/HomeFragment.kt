@@ -13,6 +13,10 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
 
+    companion object {
+        private const val SOMETHING_WENT_WRONG = "Something went wrong"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +45,7 @@ class HomeFragment : Fragment() {
                     it.findNavController().navigate(action)
                 }
                 else
-                    Toast.makeText(it.context, "Something went wrong", Toast.LENGTH_LONG).show()
+                    Toast.makeText(it.context, SOMETHING_WENT_WRONG, Toast.LENGTH_LONG).show()
             }
 
         }

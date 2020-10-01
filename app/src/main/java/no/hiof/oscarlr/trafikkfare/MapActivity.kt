@@ -23,8 +23,13 @@ import kotlinx.android.synthetic.main.activity_map.*
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private val HALDEN = LatLng(59.12478, 11.38754)
-    private val ZOOM_LEVEL = 13f
+    companion object {
+        private val HALDEN_POSITION = LatLng(59.12478, 11.38754)
+
+        private const val HALDEN_TITLE = "Halden"
+        private const val MY_POSITION_TITLE = "I am here"
+        private const val ZOOM_LEVEL_13 = 13f
+    }
 
     private lateinit var client : FusedLocationProviderClient
     private lateinit var mapFragment : SupportMapFragment
@@ -66,8 +71,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             fabMap.startAnimation(fabRotateClockwise)
 
             isExpanded = false
-        }
-        else {
+        } else {
             fabMap_delete.startAnimation(fabOpen)
             fabMap_add.startAnimation(fabOpen)
             fabMap.startAnimation(fabRotateCounterclockwise)
@@ -97,11 +101,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         fabMap.startAnimation(fabRotateClockwise)
         isExpanded = false
 
-        fabMap_add.isClickable = false
-        fabMap_add.visibility = View.INVISIBLE
-        //Must remove interaction with the other FAB aswell
-        fabMap_delete.isClickable = false
-        fabMap_delete.visibility = View.INVISIBLE
+        removeFabMapButtonContentUserInteraction()
     }
 
     @SuppressLint("RestrictedApi")
@@ -115,18 +115,22 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         fabMap.startAnimation(fabRotateClockwise)
         isExpanded = false
 
-        fabMap_delete.isClickable = false
-        fabMap_delete.visibility = View.INVISIBLE
-        //Must remove interaction with the other FAB aswell
+        removeFabMapButtonContentUserInteraction()
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun removeFabMapButtonContentUserInteraction() {
         fabMap_add.isClickable = false
         fabMap_add.visibility = View.INVISIBLE
+        fabMap_delete.isClickable = false
+        fabMap_delete.visibility = View.INVISIBLE
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
         googleMap ?: return
         with(googleMap) {
-            moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN, ZOOM_LEVEL))
-            addMarker(MarkerOptions().title("Halden").position(HALDEN))
+            moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
+            addMarker(MarkerOptions().title(HALDEN_TITLE).position(HALDEN_POSITION))
         }
         googleMap.setOnMapClickListener {
             googleMap.addMarker(MarkerOptions()
@@ -143,8 +147,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                     mapFragment.getMapAsync {
                         latLng = LatLng(location.latitude, location.longitude)
                         markerOptions = MarkerOptions().position(latLng)
-                            .title("I am here")
-                        it.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_LEVEL))
+                            .title(MY_POSITION_TITLE)
+                        it.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_LEVEL_13))
                         it.addMarker(markerOptions)
                     }
                 }
