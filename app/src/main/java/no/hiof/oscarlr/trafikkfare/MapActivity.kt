@@ -29,14 +29,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         private const val HALDEN_TITLE = "Halden"
         private const val MY_POSITION_TITLE = "I am here"
         private const val ZOOM_LEVEL_13 = 13f
+
+        private const val ADD_DANGER_TO_MAP = "Click on the map to add a new danger"
+        private const val DELETE_DANGER_FROM_MAP = "Click on a danger marker to delete it"
     }
 
     private lateinit var client : FusedLocationProviderClient
     private lateinit var mapFragment : SupportMapFragment
     private lateinit var markerOptions : MarkerOptions
     private lateinit var latLng : LatLng
+    private lateinit var mapView : View
 
     private var isExpanded = false
+    private var fabMapButtonAddClicked = false
+    private var fabMapButtonDeleteClicked = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,9 +61,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .show()
+            mapView = view
             fabMapButtonClicked()
         }
-
     }
 
     private fun fabMapButtonClicked() {
@@ -83,19 +90,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         fabMap_add.setOnClickListener {
             fabMapButtonAddClicked(it, fabClose, fabRotateClockwise )
-
+            fabMapButtonAddClicked = true
+            fabMapButtonDeleteClicked = false
+            fabMapButtonMessage()
         }
         fabMap_delete.setOnClickListener {
             fabMapButtonDeleteClicked(it, fabClose, fabRotateClockwise)
+            fabMapButtonDeleteClicked = true
+            fabMapButtonAddClicked = false
+            fabMapButtonMessage()
         }
     }
 
     @SuppressLint("RestrictedApi")
     private fun fabMapButtonAddClicked(view: View, fabClose: Animation, fabRotateClockwise: Animation) {
-        Snackbar.make(view, "Preparing to add", Snackbar.LENGTH_LONG)
-            .setAction("Action", null)
-            .show()
-
         fabMap_delete.startAnimation(fabClose)
         fabMap_add.startAnimation(fabClose)
         fabMap.startAnimation(fabRotateClockwise)
@@ -106,10 +114,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     @SuppressLint("RestrictedApi")
     private fun fabMapButtonDeleteClicked(view: View, fabClose: Animation, fabRotateClockwise: Animation) {
-        Snackbar.make(view, "Preparing to delete", Snackbar.LENGTH_LONG)
-            .setAction("Action", null)
-            .show()
-
         fabMap_delete.startAnimation(fabClose)
         fabMap_add.startAnimation(fabClose)
         fabMap.startAnimation(fabRotateClockwise)
@@ -133,10 +137,25 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             addMarker(MarkerOptions().title(HALDEN_TITLE).position(HALDEN_POSITION))
         }
         googleMap.setOnMapClickListener {
-            googleMap.addMarker(MarkerOptions()
-                .title("Fare!").position(it).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger))
-            )
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(it))
+            onMapClicked(googleMap, it)
+        }
+    }
+
+    private fun onMapClicked(googleMap: GoogleMap?, mousePosition: LatLng) {
+        with(googleMap) {
+            if (fabMapButtonAddClicked) {
+                this?.addMarker(MarkerOptions()
+                    .title("Fare!").position(mousePosition).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger))
+                )
+                this?.moveCamera(CameraUpdateFactory.newLatLng(mousePosition))
+            } // *** Implement delete danger here
+        }
+    }
+
+    private fun fabMapButtonMessage() {
+        when {
+            fabMapButtonAddClicked -> Snackbar.make(mapView, ADD_DANGER_TO_MAP, Snackbar.LENGTH_LONG).setAction("Action", null).show()
+            fabMapButtonDeleteClicked -> Snackbar.make(mapView, DELETE_DANGER_FROM_MAP, Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
     }
 
