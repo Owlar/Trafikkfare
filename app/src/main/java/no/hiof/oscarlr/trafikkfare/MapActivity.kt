@@ -142,13 +142,18 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun onMapClicked(googleMap: GoogleMap?, mousePosition: LatLng) {
+        googleMap ?: return
         with(googleMap) {
             if (fabMapButtonAddClicked) {
-                this?.addMarker(MarkerOptions()
-                    .title("Fare!").position(mousePosition).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger))
-                )
-                this?.moveCamera(CameraUpdateFactory.newLatLng(mousePosition))
-            } // *** Implement delete danger here
+                addMarker(MarkerOptions().title("Fare!").position(mousePosition).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger)))
+                moveCamera(CameraUpdateFactory.newLatLng(mousePosition))
+            }
+            if (fabMapButtonDeleteClicked) {
+                setOnMarkerClickListener { marker ->
+                    marker.remove()
+                    true
+                }
+            }
         }
     }
 
