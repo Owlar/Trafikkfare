@@ -1,8 +1,11 @@
 package no.hiof.oscarlr.trafikkfare
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
+import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -46,12 +49,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .show()
-            expandButton()
+            fabMapButtonClicked()
         }
 
     }
 
-    private fun expandButton() {
+    private fun fabMapButtonClicked() {
         val fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
         val fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close)
         val fabRotateClockwise = AnimationUtils.loadAnimation(this, R.anim.rotate_clockwise)
@@ -74,17 +77,49 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
             isExpanded = true
         }
-        fabMap_delete.setOnClickListener {
-            Snackbar.make(it, "Preparing to delete", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
+        fabMap_add.setOnClickListener {
+            fabMapButtonAddClicked(it, fabClose, fabRotateClockwise )
 
         }
-        fabMap_add.setOnClickListener {
-            Snackbar.make(it, "Preparing to add", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
+        fabMap_delete.setOnClickListener {
+            fabMapButtonDeleteClicked(it, fabClose, fabRotateClockwise)
         }
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun fabMapButtonAddClicked(view: View, fabClose: Animation, fabRotateClockwise: Animation) {
+        Snackbar.make(view, "Preparing to add", Snackbar.LENGTH_LONG)
+            .setAction("Action", null)
+            .show()
+
+        fabMap_delete.startAnimation(fabClose)
+        fabMap_add.startAnimation(fabClose)
+        fabMap.startAnimation(fabRotateClockwise)
+        isExpanded = false
+
+        fabMap_add.isClickable = false
+        fabMap_add.visibility = View.INVISIBLE
+        //Must remove interaction with the other FAB aswell
+        fabMap_delete.isClickable = false
+        fabMap_delete.visibility = View.INVISIBLE
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun fabMapButtonDeleteClicked(view: View, fabClose: Animation, fabRotateClockwise: Animation) {
+        Snackbar.make(view, "Preparing to delete", Snackbar.LENGTH_LONG)
+            .setAction("Action", null)
+            .show()
+
+        fabMap_delete.startAnimation(fabClose)
+        fabMap_add.startAnimation(fabClose)
+        fabMap.startAnimation(fabRotateClockwise)
+        isExpanded = false
+
+        fabMap_delete.isClickable = false
+        fabMap_delete.visibility = View.INVISIBLE
+        //Must remove interaction with the other FAB aswell
+        fabMap_add.isClickable = false
+        fabMap_add.visibility = View.INVISIBLE
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
