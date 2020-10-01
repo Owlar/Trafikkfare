@@ -3,6 +3,7 @@ package no.hiof.oscarlr.trafikkfare
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -27,6 +28,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var markerOptions : MarkerOptions
     private lateinit var latLng : LatLng
 
+    private var isExpanded = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
@@ -43,6 +46,44 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .show()
+            expandButton()
+        }
+
+    }
+
+    private fun expandButton() {
+        val fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
+        val fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close)
+        val fabRotateClockwise = AnimationUtils.loadAnimation(this, R.anim.rotate_clockwise)
+        val fabRotateCounterclockwise = AnimationUtils.loadAnimation(this, R.anim.rotate_counterclockwise)
+
+        if (isExpanded) {
+            fabMap_delete.startAnimation(fabClose)
+            fabMap_add.startAnimation(fabClose)
+            fabMap.startAnimation(fabRotateClockwise)
+
+            isExpanded = false
+        }
+        else {
+            fabMap_delete.startAnimation(fabOpen)
+            fabMap_add.startAnimation(fabOpen)
+            fabMap.startAnimation(fabRotateCounterclockwise)
+
+            fabMap_delete.isClickable
+            fabMap_add.isClickable
+
+            isExpanded = true
+        }
+        fabMap_delete.setOnClickListener {
+            Snackbar.make(it, "Preparing to delete", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
+
+        }
+        fabMap_add.setOnClickListener {
+            Snackbar.make(it, "Preparing to add", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
         }
     }
 
@@ -50,7 +91,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap ?: return
         with(googleMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN, ZOOM_LEVEL))
-            addMarker(MarkerOptions().position(HALDEN))
+            addMarker(MarkerOptions().title("Halden").position(HALDEN))
         }
         googleMap.setOnMapClickListener {
             googleMap.addMarker(MarkerOptions()

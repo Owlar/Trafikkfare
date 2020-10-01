@@ -16,16 +16,43 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
 
+        <!-- START REGION: Expandable options of * FAB * -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMap_add"
+            android:src="@drawable/ic_baseline_add_24"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="130dp"
+            android:layout_marginEnd="24dp"
+            android:backgroundTint="@android:color/white"
+            app:fabSize="mini"
+            app:pressedTranslationZ="12dp" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMap_delete"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="24dp"
+            android:backgroundTint="@android:color/white"
+            app:fabSize="mini"
+            app:pressedTranslationZ="12dp" />
+        <!-- END REGION: Expandable options of * FAB * -->
+
+        <!-- * FAB * -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabMap"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
             android:src="@drawable/danger"
             android:contentDescription="@string/submit"
-            android:layout_margin="16dp"
             android:backgroundTint="@android:color/holo_red_dark"
             android:tint="@android:color/white" />
+
     </fragment>
 
 
