@@ -29,9 +29,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         private const val HALDEN_TITLE = "Halden"
         private const val MY_POSITION_TITLE = "I am here"
         private const val ZOOM_LEVEL_13 = 13f
-
         private const val ADD_DANGER_TO_MAP = "Click on the map to add a new danger"
         private const val DELETE_DANGER_FROM_MAP = "Click on a danger marker to delete it"
+        private const val DEFAULT_DANGER_TITLE = "Fare!"
     }
 
     private lateinit var client : FusedLocationProviderClient
@@ -39,11 +39,14 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var markerOptions : MarkerOptions
     private lateinit var latLng : LatLng
     private lateinit var mapView : View
+    private lateinit var gMap : GoogleMap
+
+    private val fabOpen : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.fab_open) }
+    private val fabClose : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.fab_close) }
+    private val fabRotateClockwise : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_clockwise) }
+    private val fabRotateCounterclockwise : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_counterclockwise) }
 
     private var isExpanded = false
-    private var fabMapButtonAddClicked = false
-    private var fabMapButtonDeleteClicked = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,10 +70,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun fabMapButtonClicked() {
-        val fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open)
-        val fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close)
-        val fabRotateClockwise = AnimationUtils.loadAnimation(this, R.anim.rotate_clockwise)
-        val fabRotateCounterclockwise = AnimationUtils.loadAnimation(this, R.anim.rotate_counterclockwise)
 
         if (isExpanded) {
             fabMap_delete.startAnimation(fabClose)
@@ -89,21 +88,37 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             isExpanded = true
         }
         fabMap_add.setOnClickListener {
-            fabMapButtonAddClicked(it, fabClose, fabRotateClockwise )
-            fabMapButtonAddClicked = true
-            fabMapButtonDeleteClicked = false
-            fabMapButtonMessage()
+            fabMapButtonAddClicked(fabClose, fabRotateClockwise)
+            fabMapAddButtonMessage()
+            addMarker(gMap)
         }
         fabMap_delete.setOnClickListener {
-            fabMapButtonDeleteClicked(it, fabClose, fabRotateClockwise)
-            fabMapButtonDeleteClicked = true
-            fabMapButtonAddClicked = false
-            fabMapButtonMessage()
+            fabMapButtonDeleteClicked(fabClose, fabRotateClockwise)
+            fabMapDeleteButtonMessage()
+            deleteMarker(gMap)
+        }
+    }
+
+    private fun addMarker(gMap: GoogleMap) {
+        with(gMap) {
+            setOnMapClickListener {
+                addMarker(MarkerOptions().title(DEFAULT_DANGER_TITLE).position(it).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger)))
+                moveCamera(CameraUpdateFactory.newLatLng(it))
+            }
+        }
+    }
+
+    private fun deleteMarker(gMap: GoogleMap) {
+        with(gMap) {
+            setOnMarkerClickListener { marker ->
+                marker.remove()
+                true
+            }
         }
     }
 
     @SuppressLint("RestrictedApi")
-    private fun fabMapButtonAddClicked(view: View, fabClose: Animation, fabRotateClockwise: Animation) {
+    private fun fabMapButtonAddClicked(fabClose: Animation, fabRotateClockwise: Animation) {
         fabMap_delete.startAnimation(fabClose)
         fabMap_add.startAnimation(fabClose)
         fabMap.startAnimation(fabRotateClockwise)
@@ -113,7 +128,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     @SuppressLint("RestrictedApi")
-    private fun fabMapButtonDeleteClicked(view: View, fabClose: Animation, fabRotateClockwise: Animation) {
+    private fun fabMapButtonDeleteClicked(fabClose: Animation, fabRotateClockwise: Animation) {
         fabMap_delete.startAnimation(fabClose)
         fabMap_add.startAnimation(fabClose)
         fabMap.startAnimation(fabRotateClockwise)
@@ -135,33 +150,16 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         with(googleMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
             addMarker(MarkerOptions().title(HALDEN_TITLE).position(HALDEN_POSITION))
-        }
-        googleMap.setOnMapClickListener {
-            onMapClicked(googleMap, it)
+            gMap = this
         }
     }
 
-    private fun onMapClicked(googleMap: GoogleMap?, mousePosition: LatLng) {
-        googleMap ?: return
-        with(googleMap) {
-            if (fabMapButtonAddClicked) {
-                addMarker(MarkerOptions().title("Fare!").position(mousePosition).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger)))
-                moveCamera(CameraUpdateFactory.newLatLng(mousePosition))
-            }
-            if (fabMapButtonDeleteClicked) {
-                setOnMarkerClickListener { marker ->
-                    marker.remove()
-                    true
-                }
-            }
-        }
+    private fun fabMapAddButtonMessage() {
+        Snackbar.make(mapView, ADD_DANGER_TO_MAP, Snackbar.LENGTH_LONG).setAction("Action", null).show()
     }
 
-    private fun fabMapButtonMessage() {
-        when {
-            fabMapButtonAddClicked -> Snackbar.make(mapView, ADD_DANGER_TO_MAP, Snackbar.LENGTH_LONG).setAction("Action", null).show()
-            fabMapButtonDeleteClicked -> Snackbar.make(mapView, DELETE_DANGER_FROM_MAP, Snackbar.LENGTH_LONG).setAction("Action", null).show()
-        }
+    private fun fabMapDeleteButtonMessage() {
+        Snackbar.make(mapView, DELETE_DANGER_FROM_MAP, Snackbar.LENGTH_LONG).setAction("Action", null).show()
     }
 
     private fun getUserPosition() {
