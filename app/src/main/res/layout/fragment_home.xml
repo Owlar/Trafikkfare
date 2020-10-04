@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_height="140dp"
         android:layout_width="140dp"
+        android:layout_height="140dp"
         android:contentDescription="@string/profile_picture"
         app:layout_constraintBottom_toTopOf="@+id/textViewWelcome"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,6 @@
         android:text="@string/map"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textViewWelcome"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/textViewWelcome"
         app:layout_constraintTop_toBottomOf="@+id/textViewWelcome" />
 
@@ -64,5 +63,16 @@
         app:layout_constraintStart_toStartOf="@+id/userLocationButton"
         app:layout_constraintTop_toBottomOf="@+id/userLocationButton" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navigation_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="@android:color/holo_red_dark"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

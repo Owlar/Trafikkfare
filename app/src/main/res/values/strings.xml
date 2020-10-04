@@ -5,7 +5,7 @@
     <string name="login">Login</string>
     <string name="profile_picture">Profile picture</string>
     <string name="welcome">Welcome</string>
-    <string name="myLocation">My Location</string>
+    <string name="my_location">My Location</string>
     <string name="map">Map</string>
     <string name="danger_title">DangerTitle</string>
     <string name="danger_description">Dangerous</string>
@@ -13,4 +13,9 @@
     <string name="danger">Fare</string>
     <string name="submit">Submit</string>
     <string name="red">#EA4335</string>
+    <string name="home_no">Hjem</string>
+    <string name="dangers_no">Farer</string>
+    <string name="location_no">Sted</string>
+    <string name="news_no">Nyheter</string>
+    <string name="map_no">Kart</string>
 </resources>

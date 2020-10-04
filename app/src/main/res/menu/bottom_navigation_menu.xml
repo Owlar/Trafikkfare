@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_dest"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/home_no">
+    </item>
+    <item
+        android:id="@+id/dangers_dest"
+        android:enabled="true"
+        android:icon="@drawable/danger_icon"
+        android:title="@string/dangers_no">
+    </item>
+    <item
+        android:id="@+id/location_dest"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_place_24"
+        android:title="@string/location_no">
+    </item>
+    <item
+        android:id="@+id/news_dest"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_announcement_24"
+        android:title="@string/news_no">
+    </item>
+    <item
+        android:id="@+id/map_dest"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="@string/map_no">
+    </item>
+
+</menu>
