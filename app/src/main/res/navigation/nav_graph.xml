@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_see_dangers"
             app:destination="@+id/dangers" />
+        <action
+            android:id="@+id/action_see_home"
+            app:destination="@+id/homeFragment" />
     </fragment>
 
     <fragment
