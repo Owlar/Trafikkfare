@@ -18,4 +18,10 @@
     <string name="location_no">Sted</string>
     <string name="news_no">Nyheter</string>
     <string name="map_no">Kart</string>
+    <string name="profile_no">Profil</string>
+    <string name="content_description_profile">Min profil</string>
+    <string name="more_no">Mer</string>
+    <string name="search_no">Søk</string>
+    <string name="content_description_search">Søk</string>
+    <string name="content_description_more">Se mer</string>
 </resources>

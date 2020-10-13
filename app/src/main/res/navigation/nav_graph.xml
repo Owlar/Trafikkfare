@@ -25,11 +25,11 @@
         app:argType="string"
         android:defaultValue="Username" />
         <action
-            android:id="@+id/action_see_dangers"
-            app:destination="@+id/dangers" />
-        <action
             android:id="@+id/action_see_home"
             app:destination="@+id/homeFragment" />
+        <action
+            android:id="@+id/action_see_dangers"
+            app:destination="@+id/dangers" />
     </fragment>
 
     <fragment
@@ -40,6 +40,12 @@
             android:name="username"
             app:argType="string"
             android:defaultValue="Username" />
+        <action
+            android:id="@+id/action_see_home"
+            app:destination="@+id/homeFragment" />
+        <action
+            android:id="@+id/action_see_dangers"
+            app:destination="@+id/dangers" />
         <action
             android:id="@+id/action_dangers_to_dangerDetailFragment"
             app:destination="@id/dangerDetailFragment"/>
@@ -53,6 +59,12 @@
         <argument
             android:name="uid"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_see_home"
+            app:destination="@+id/homeFragment" />
+        <action
+            android:id="@+id/action_see_dangers"
+            app:destination="@+id/dangers" />
     </fragment>
 
 </navigation>
