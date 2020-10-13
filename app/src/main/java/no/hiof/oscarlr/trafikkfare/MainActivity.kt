@@ -3,17 +3,13 @@ package no.hiof.oscarlr.trafikkfare
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,10 +22,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var navController = findNavController(R.id.nav_host_fragment)
-        setupBottomNavMenu(navController)
+        top_app_bar.setNavigationOnClickListener {
+            Log.d("MainActivity", "Navigate..")
+        }
 
-        /*top_app_bar.setOnMenuItemClickListener {
+        top_app_bar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.profile -> {
                     true
@@ -42,7 +39,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-        }*/
+        }
+
+        var navController = findNavController(R.id.nav_host_fragment)
+        setupBottomNavMenu(navController)
     }
 
     private fun setupBottomNavMenu(navController: NavController) {

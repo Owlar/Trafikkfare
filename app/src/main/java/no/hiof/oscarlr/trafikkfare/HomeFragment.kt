@@ -1,16 +1,11 @@
 package no.hiof.oscarlr.trafikkfare
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_home.*
 import no.hiof.oscarlr.trafikkfare.HomeFragmentArgs.Companion.fromBundle
 
