@@ -13,10 +13,16 @@ import no.hiof.oscarlr.trafikkfare.model.Danger
 /* Source: https://github.com/larseknu/mobilprogrammering2019/tree/master/Lecture05_RecyclerView/AfterLecture_Kotlin */
 class DangerDetailFragment : Fragment() {
 
+    companion object {
+        private const val DANGER_TITLE_NO = "Fare"
+    }
+
     override fun onCreateView (
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if (activity is EditBars)
+            (activity as EditBars).setBarTitle(DANGER_TITLE_NO)
         return inflater.inflate(R.layout.fragment_danger_detail, container, false)
     }
 

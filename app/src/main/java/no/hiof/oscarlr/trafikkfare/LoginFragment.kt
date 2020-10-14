@@ -21,9 +21,8 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //Hide bars in login fragment
-        if (activity is HideBars)
-            (activity as HideBars).hideBars(true)
+        if (activity is EditBars)
+            (activity as EditBars).hideBars(true)
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
@@ -43,8 +42,8 @@ class LoginFragment : Fragment() {
     //Show bars in home fragment when login is successful
     override fun onDestroyView() {
         super.onDestroyView()
-        if (activity is HideBars)
-            (activity as HideBars).hideBars(false)
+        if (activity is EditBars)
+            (activity as EditBars).hideBars(false)
     }
 
 }

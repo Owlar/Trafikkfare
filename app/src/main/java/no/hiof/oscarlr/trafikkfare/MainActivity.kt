@@ -13,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity(), HideBars {
+class MainActivity : AppCompatActivity(), EditBars {
 
     companion object {
         private const val SOMETHING_WENT_WRONG = "Something went wrong"
@@ -23,11 +23,10 @@ class MainActivity : AppCompatActivity(), HideBars {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        top_app_bar.setNavigationOnClickListener {
-            Log.d("MainActivity", "Navigate..")
+        top_app_bar?.setNavigationOnClickListener {
+            Log.d("MainActivity", "Navigate")
         }
-
-        top_app_bar.setOnMenuItemClickListener {
+        top_app_bar?.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.profile -> {
                     true
@@ -41,7 +40,6 @@ class MainActivity : AppCompatActivity(), HideBars {
                 else -> false
             }
         }
-
         val navController = findNavController(R.id.nav_host_fragment)
         setupBottomNavMenu(navController)
     }
@@ -105,6 +103,11 @@ class MainActivity : AppCompatActivity(), HideBars {
             top_app_bar.visibility = View.VISIBLE
             bottom_navigation.visibility = View.VISIBLE
         }
+    }
+
+    override fun setBarTitle(title: String) {
+        if (title.isNotEmpty())
+            top_app_bar.title = title
     }
 
 }

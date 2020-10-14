@@ -12,6 +12,8 @@ import no.hiof.oscarlr.trafikkfare.HomeFragmentArgs.Companion.fromBundle
 class HomeFragment : Fragment() {
 
     companion object {
+        private const val HOME_TITLE_NO = "Hjem"
+
         private lateinit var usernameTextView : TextView
         private lateinit var username : String
 
@@ -25,6 +27,8 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if (activity is EditBars)
+            (activity as EditBars).setBarTitle(HOME_TITLE_NO)
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 

@@ -9,26 +9,33 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_danger_list.*
 import no.hiof.oscarlr.trafikkfare.adapter.DangerAdapter
 import no.hiof.oscarlr.trafikkfare.model.Danger
 
-/* Source: https://github.com/larseknu/mobilprogrammering2019/tree/master/Lecture05_RecyclerView/AfterLecture_Kotlin */
 class DangerListFragment : Fragment() {
+
+    companion object {
+        private const val DANGERS_TITLE_NO = "Farer"
+    }
+
     private var dangers : ArrayList<Danger> = Danger.getDangers()
 
     override fun onCreateView (
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if (activity is EditBars)
+            (activity as EditBars).setBarTitle(DANGERS_TITLE_NO)
         return inflater.inflate(R.layout.fragment_danger_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val usernameTextView: TextView = view.findViewById(R.id.usernameTextView)
+        /*val usernameTextView: TextView = view.findViewById(R.id.usernameTextView)
         val username = DangerListFragmentArgs.fromBundle(requireArguments()).username
-        usernameTextView.text = username
+        usernameTextView.text = username*/
         setUpRecycleView()
     }
 

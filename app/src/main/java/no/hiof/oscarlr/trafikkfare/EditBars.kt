@@ -1,5 +1,6 @@
 package no.hiof.oscarlr.trafikkfare
 
-interface HideBars {
+interface EditBars {
     fun hideBars(isShown: Boolean)
+    fun setBarTitle(title: String)
 }
