@@ -31,4 +31,5 @@ class User(val userId : Int, var firstName : String, var lastName : String, var 
             return "Oscar Ramstad" in users
         }
     }
+
 }

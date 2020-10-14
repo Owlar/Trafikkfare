@@ -2,11 +2,15 @@ package no.hiof.oscarlr.trafikkfare
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -61,9 +65,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             getUserPosition()
         }
         fabMap.setOnClickListener { view ->
-            Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
             mapView = view
             fabMapButtonClicked()
         }
@@ -184,7 +185,14 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         if (requestCode == 11) {
             if (grantResults.isNotEmpty() && grantResults[0] == PERMISSION_GRANTED)
                 getUserPosition()
+            else {
+                Toast.makeText(this, "Permission to access location denied. Please edit permissions.", Toast.LENGTH_LONG).show()
+                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", packageName, null)
+                })
+            }
         }
+
     }
 }
 

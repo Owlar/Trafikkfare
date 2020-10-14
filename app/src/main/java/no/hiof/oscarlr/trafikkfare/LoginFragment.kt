@@ -47,5 +47,4 @@ class LoginFragment : Fragment() {
             (activity as HideBars).hideBars(false)
     }
 
-
 }

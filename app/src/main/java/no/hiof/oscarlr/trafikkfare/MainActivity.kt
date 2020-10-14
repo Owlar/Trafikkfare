@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), HideBars {
             }
         }
 
-        var navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(R.id.nav_host_fragment)
         setupBottomNavMenu(navController)
     }
 
@@ -106,4 +106,5 @@ class MainActivity : AppCompatActivity(), HideBars {
             bottom_navigation.visibility = View.VISIBLE
         }
     }
+
 }

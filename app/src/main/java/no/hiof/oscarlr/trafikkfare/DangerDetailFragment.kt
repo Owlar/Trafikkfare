@@ -29,4 +29,5 @@ class DangerDetailFragment : Fragment() {
         dangerPosterImageView.setImageResource(danger.posterUrl)
         dangerDescriptionTextView.text = danger.description
     }
+
 }
