@@ -24,4 +24,5 @@
     <string name="search_no">Søk</string>
     <string name="content_description_search">Søk</string>
     <string name="content_description_more">Se mer</string>
+    <string name="password">Password</string>
 </resources>
