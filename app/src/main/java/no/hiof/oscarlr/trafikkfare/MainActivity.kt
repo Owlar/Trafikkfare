@@ -3,6 +3,7 @@ package no.hiof.oscarlr.trafikkfare
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -12,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HideBars {
 
     companion object {
         private const val SOMETHING_WENT_WRONG = "Something went wrong"
@@ -94,5 +95,15 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, MapActivity::class.java)
         startActivity(intent)
         Log.d("MapActivity", "Navigated to map")
+    }
+
+    override fun hideBars(isShown: Boolean) {
+        if (isShown) {
+            top_app_bar.visibility = View.INVISIBLE
+            bottom_navigation.visibility = View.INVISIBLE
+        } else {
+            top_app_bar.visibility = View.VISIBLE
+            bottom_navigation.visibility = View.VISIBLE
+        }
     }
 }

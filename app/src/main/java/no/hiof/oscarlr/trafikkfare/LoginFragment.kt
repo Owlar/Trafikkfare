@@ -21,12 +21,14 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //Hide bars in login fragment
+        if (activity is HideBars)
+            (activity as HideBars).hideBars(true)
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         loginButton.setOnClickListener {
             if (editTextUsername.text.toString().isNotEmpty() && editTextPassword.text.toString().isNotEmpty()) {
                 val username = editTextUsername.text.toString()
@@ -36,6 +38,13 @@ class LoginFragment : Fragment() {
             else
                 Toast.makeText(it.context, INVALID_CREDENTIALS, Toast.LENGTH_LONG).show()
         }
+    }
+
+    //Show bars in home fragment when login is successful
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (activity is HideBars)
+            (activity as HideBars).hideBars(false)
     }
 
 
