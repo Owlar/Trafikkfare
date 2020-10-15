@@ -105,6 +105,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             setOnMapClickListener {
                 addMarker(MarkerOptions().title(DEFAULT_DANGER_TITLE).position(it).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger)))
                 moveCamera(CameraUpdateFactory.newLatLng(it))
+                setOnMapClickListener{}
             }
         }
     }
@@ -113,6 +114,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         with(gMap) {
             setOnMarkerClickListener { marker ->
                 marker.remove()
+                setOnMarkerClickListener{false}
                 true
             }
         }
