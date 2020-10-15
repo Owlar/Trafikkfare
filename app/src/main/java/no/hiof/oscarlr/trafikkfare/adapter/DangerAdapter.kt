@@ -28,8 +28,8 @@ class DangerAdapter (private val items: ArrayList<Danger>, private var clickList
     }
 
     class DangerViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-        private val dangerPosterImageView : ImageView = view.dangerPosterImageView
-        private val dangerTitleTextView : TextView = view.dangerTitleTextView
+        private val dangerPosterImageView = view.dangerPosterImageView
+        private val dangerTitleTextView = view.dangerTitleTextView
 
         fun bind(item: Danger, clickListener: View.OnClickListener) {
             dangerPosterImageView.setImageResource(item.posterUrl)

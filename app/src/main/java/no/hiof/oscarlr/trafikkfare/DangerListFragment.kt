@@ -34,10 +34,10 @@ class DangerListFragment : Fragment() {
         /*val usernameTextView: TextView = view.findViewById(R.id.usernameTextView)
         val username = DangerListFragmentArgs.fromBundle(requireArguments()).username
         usernameTextView.text = username*/
-        setUpRecyclerView()
+        setupRecyclerView()
     }
 
-    private fun setUpRecyclerView() {
+    private fun setupRecyclerView() {
         dangerRecyclerView.adapter = DangerAdapter(dangers
         ) { view ->
             val position = dangerRecyclerView.getChildAdapterPosition(view)
