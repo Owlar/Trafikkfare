@@ -31,9 +31,6 @@ class DangerListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*val usernameTextView: TextView = view.findViewById(R.id.usernameTextView)
-        val username = DangerListFragmentArgs.fromBundle(requireArguments()).username
-        usernameTextView.text = username*/
         setupRecyclerView()
     }
 
@@ -47,7 +44,6 @@ class DangerListFragment : Fragment() {
             findNavController().navigate(action)
             Toast.makeText(view.context, clickedDanger.title + " clicked", Toast.LENGTH_LONG).show()
         }
-
         dangerRecyclerView.layoutManager = GridLayoutManager(context, 3)
     }
 
