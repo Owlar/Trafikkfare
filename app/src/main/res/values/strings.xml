@@ -26,7 +26,7 @@
     <string name="content_description_search">Søk</string>
     <string name="content_description_more">Se mer</string>
     <string name="password">Password</string>
-    <string name="welcome_back">Welcome back</string>
+    <string name="welcome_back_no">Velkommen tilbake</string>
     <string name="news_list_item_title">Tittel</string>
     <string name="news_list_item_road">Vei</string>
     <string name="news_list_item_county">Fylke</string>

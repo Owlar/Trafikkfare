@@ -22,16 +22,16 @@ data class News(val uid: Int, var road: String, var title: String, var county: S
             )
 
             val mooseNews = News(
-                1, "E6", "Dead moose", "Hedmark", "Truck hit moose, road is blocked",
+                1, "E6", "Død elg", "Hedmark", "Lastebilsjåfør kolliderte med elg, vei blokkert.",
                 LocalDateTime.of(2020, 10, 15, 13, 55), LocalDateTime.now())
             val windNews = News(
-                2, "E10", "Storm", "Nordland", "Storm, please stay inside your car",
+                2, "E10", "Storm", "Nordland", "Det blåser noe voldsomt, ikke gå ut av bilen.",
                 LocalDateTime.of(2020, 11, 15, 13, 55), LocalDateTime.now())
             val skiNews = News(
-                3, "E45", "Ski festival", "Finnmark", "Ski festival in Finnmark, be aware of skiers",
+                3, "E45", "Ski festival", "Finnmark", "Ski festival i Finnmark, kjør forsiktig og vær obs på skiløpere.",
                 LocalDateTime.of(2020, 1, 15, 13, 55), LocalDateTime.now())
             val landslideNews = News(
-                4, "E39", "Car rescue", "Sogn og Fjordane", "Rescuing car from landslide. Be careful, there is still a risk of landslides",
+                4, "E39", "Car rescue", "Sogn og Fjordane", "Bilberging etter ras. Vær forsiktig, det er fortsatt rasfare i nærheten av ulykken.",
                 LocalDateTime.of(2020, 4, 15, 14, 55), LocalDateTime.now())
 
             newsData.add(mooseNews)

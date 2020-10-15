@@ -3,8 +3,6 @@ package no.hiof.oscarlr.trafikkfare.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_home_news_list_item.view.*
 import no.hiof.oscarlr.trafikkfare.R
