@@ -8,6 +8,7 @@
     <string name="my_location">My Location</string>
     <string name="map">Map</string>
     <string name="danger_title">DangerTitle</string>
+    <string name="danger_no">Fare</string>
     <string name="danger_description">Dangerous</string>
     <string name="danger_poster">DangerPoster</string>
     <string name="danger">Fare</string>
@@ -25,4 +26,9 @@
     <string name="content_description_search">Søk</string>
     <string name="content_description_more">Se mer</string>
     <string name="password">Password</string>
+    <string name="welcome_back">Welcome back</string>
+    <string name="news_list_item_title">Tittel</string>
+    <string name="news_list_item_road">Vei</string>
+    <string name="news_list_item_county">Fylke</string>
+    <string name="news_list_item_description">Beskrivelse</string>
 </resources>

@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_danger_list.*
 import no.hiof.oscarlr.trafikkfare.adapter.DangerAdapter
 import no.hiof.oscarlr.trafikkfare.model.Danger
@@ -36,18 +34,19 @@ class DangerListFragment : Fragment() {
         /*val usernameTextView: TextView = view.findViewById(R.id.usernameTextView)
         val username = DangerListFragmentArgs.fromBundle(requireArguments()).username
         usernameTextView.text = username*/
-        setUpRecycleView()
+        setUpRecyclerView()
     }
 
-    private fun setUpRecycleView() {
-        dangerRecyclerView.adapter = DangerAdapter(dangers,
-        View.OnClickListener { view ->
+    private fun setUpRecyclerView() {
+        dangerRecyclerView.adapter = DangerAdapter(dangers
+        ) { view ->
             val position = dangerRecyclerView.getChildAdapterPosition(view)
             val clickedDanger = dangers[position]
-            val action = DangerListFragmentDirections.actionDangersToDangerDetailFragment(clickedDanger.uid)
+            val action =
+                DangerListFragmentDirections.actionDangersToDangerDetailFragment(clickedDanger.uid)
             findNavController().navigate(action)
             Toast.makeText(view.context, clickedDanger.title + " clicked", Toast.LENGTH_LONG).show()
-        })
+        }
 
         dangerRecyclerView.layoutManager = GridLayoutManager(context, 3)
     }

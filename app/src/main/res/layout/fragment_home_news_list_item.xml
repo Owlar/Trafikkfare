@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="6dp"
+    app:cardCornerRadius="2dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+        
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/ic_launcher"
+            android:id="@+id/news_item_image"
+            android:contentDescription="@string/danger_no" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/news_item_road"
+            android:layout_toEndOf="@id/news_item_image"
+            android:text="@string/news_list_item_road"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/news_item_title"
+            android:layout_toEndOf="@id/news_item_road"
+            android:text="@string/news_list_item_title"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/news_item_county"
+            android:layout_toEndOf="@id/news_item_road"
+            android:layout_below="@id/news_item_title"
+            android:text="@string/news_list_item_county"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/news_item_description"
+            android:layout_toEndOf="@id/news_item_road"
+            android:layout_below="@id/news_item_county"
+            android:text="@string/news_list_item_description"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/news_item_startDate"
+            android:layout_toEndOf="@id/news_item_road"
+            android:layout_below="@id/news_item_description"
+            android:text="@string/news_list_item_title"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/news_item_endDate"
+            android:layout_toEndOf="@id/news_item_startDate"
+            android:layout_below="@+id/news_item_description"
+            android:text="@string/news_list_item_title"
+            android:layout_marginStart="10dp"/>
+
+    </RelativeLayout>
+        
+
+
+
+
+
+</androidx.cardview.widget.CardView>
