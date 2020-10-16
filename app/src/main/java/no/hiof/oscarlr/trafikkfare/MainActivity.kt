@@ -1,9 +1,11 @@
 package no.hiof.oscarlr.trafikkfare
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -13,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity(), EditBars {
+class MainActivity : AppCompatActivity(), IMainActivity {
 
     companion object {
         private const val SOMETHING_WENT_WRONG = "Something went wrong"
@@ -108,6 +110,11 @@ class MainActivity : AppCompatActivity(), EditBars {
     override fun setBarTitle(title: String) {
         if (title.isNotEmpty())
             top_app_bar.title = title
+    }
+
+    override fun closeKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 }

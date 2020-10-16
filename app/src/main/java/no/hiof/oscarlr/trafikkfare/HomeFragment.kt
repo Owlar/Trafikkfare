@@ -35,8 +35,8 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (activity is EditBars)
-            (activity as EditBars).setBarTitle(HOME_TITLE_NO)
+        if (activity is IMainActivity)
+            (activity as IMainActivity).setBarTitle(HOME_TITLE_NO)
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 

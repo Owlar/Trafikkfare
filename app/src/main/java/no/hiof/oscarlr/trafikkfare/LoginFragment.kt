@@ -21,14 +21,16 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (activity is EditBars)
-            (activity as EditBars).hideBars(true)
+        if (activity is IMainActivity)
+            (activity as IMainActivity).hideBars(true)
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loginButton.setOnClickListener {
+            if (activity is IMainActivity)
+                (activity as IMainActivity).closeKeyboard(it)
             if (editTextUsername.text.toString().isNotEmpty() && editTextPassword.text.toString().isNotEmpty()) {
                 val username = editTextUsername.text.toString()
                 val action = LoginFragmentDirections.actionLoginToHome(username)
@@ -42,8 +44,8 @@ class LoginFragment : Fragment() {
     //Show bars in home fragment when login is successful
     override fun onDestroyView() {
         super.onDestroyView()
-        if (activity is EditBars)
-            (activity as EditBars).hideBars(false)
+        if (activity is IMainActivity)
+            (activity as IMainActivity).hideBars(false)
     }
 
 }

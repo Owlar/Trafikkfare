@@ -24,8 +24,8 @@ class DangerListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (activity is EditBars)
-            (activity as EditBars).setBarTitle(DANGERS_TITLE_NO)
+        if (activity is IMainActivity)
+            (activity as IMainActivity).setBarTitle(DANGERS_TITLE_NO)
         return inflater.inflate(R.layout.fragment_danger_list, container, false)
     }
 
