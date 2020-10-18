@@ -18,6 +18,7 @@
                 android:id="@+id/top_app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:backgroundTint="@color/darkRed"
                 app:title="@string/home_no"
                 app:menu="@menu/top_app_bar"
                 app:navigationIcon="@drawable/ic_baseline_menu_24"
@@ -50,7 +51,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:backgroundTint="@color/colorPrimary"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white" />
+        app:itemIconTint="@color/darkRed"
+        app:itemTextColor="@color/darkRed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

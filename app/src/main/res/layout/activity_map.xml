@@ -24,7 +24,7 @@
             android:layout_margin="16dp"
             android:contentDescription="@string/submit"
             android:backgroundTint="@android:color/white"
-            android:tint="@android:color/black" />
+            android:tint="@color/colorPrimaryDark" />
 
         <!-- START REGION: Expandable options of * FAB * -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -64,7 +64,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             android:contentDescription="@string/submit"
-            android:backgroundTint="@color/importantRed" />
+            android:backgroundTint="@color/colorAccent" />
 
     </fragment>
 
