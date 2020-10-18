@@ -21,7 +21,7 @@
           android:fillColor="#faf0e6"/>
       <path
           android:pathData="M268.012,291L243.988,291L243.988,266.977L268.012,266.977ZM268.012,156.352L263.441,248.227L248.559,248.227l-4.57,-91.875L243.989,119.2L268.012,119.2Z"
-          android:fillColor="#f82323"/>
+          android:fillColor="@color/importantRed"/>
     </group>
   </group>
 </vector>

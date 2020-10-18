@@ -64,8 +64,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             android:contentDescription="@string/submit"
-            android:backgroundTint="@android:color/holo_red_dark"
-            android:tint="@android:color/white" />
+            android:backgroundTint="@color/importantRed" />
 
     </fragment>
 

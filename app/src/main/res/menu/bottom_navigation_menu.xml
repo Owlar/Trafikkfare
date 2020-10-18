@@ -10,7 +10,7 @@
     <item
         android:id="@+id/dangers_dest"
         android:enabled="true"
-        android:icon="@drawable/danger_icon"
+        android:icon="@drawable/ic_baseline_danger_24"
         android:title="@string/dangers_no">
     </item>
     <item
