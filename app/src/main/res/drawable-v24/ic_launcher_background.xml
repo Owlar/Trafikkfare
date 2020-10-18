@@ -13,13 +13,13 @@
           android:pathData="M0,0h512v512h-512z">
         <aapt:attr name="android:fillColor">
           <gradient 
-              android:startY="-20.48"
-              android:startX="-66.048"
-              android:endY="609.792"
-              android:endX="567.296"
+              android:startY="0"
+              android:startX="256"
+              android:endY="512"
+              android:endX="256"
               android:type="linear">
-            <item android:offset="0" android:color="#FFCC0318"/>
-            <item android:offset="1" android:color="#FFFF1E1E"/>
+            <item android:offset="0" android:color="#FFF82323"/>
+            <item android:offset="1" android:color="#FF7C1212"/>
           </gradient>
         </aapt:attr>
       </path>
