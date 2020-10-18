@@ -92,15 +92,13 @@ class MainActivity : AppCompatActivity(), IMainActivity {
     }
 
     private fun navigateToMap() {
-        val intent = Intent(this, MapActivity::class.java)
-        startActivity(intent)
-        Log.d("MapActivity", "Navigated to map")
+        startActivity(Intent(this, MapActivity::class.java))
     }
 
     override fun hideBars(isShown: Boolean) {
         if (isShown) {
-            top_app_bar.visibility = View.INVISIBLE
-            bottom_navigation.visibility = View.INVISIBLE
+            top_app_bar.visibility = View.GONE
+            bottom_navigation.visibility = View.GONE
         } else {
             top_app_bar.visibility = View.VISIBLE
             bottom_navigation.visibility = View.VISIBLE
