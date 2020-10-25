@@ -2,6 +2,7 @@ package no.hiof.oscarlr.trafikkfare
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
@@ -24,6 +25,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_map.*
+import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
+import no.hiof.oscarlr.trafikkfare.util.longToast
+import no.hiof.oscarlr.trafikkfare.util.shortToast
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -67,6 +71,25 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         fabMap.setOnClickListener { view ->
             mapView = view
             fabMapButtonClicked()
+        }
+        val bottomSheet = findViewById<View>(R.id.map_bottomSheet)
+        handleBottomSheetSwitches(bottomSheet)
+    }
+
+    private fun handleBottomSheetSwitches(bottomSheet: View?) {
+        bottomSheet ?: return
+        setTrafficLayer.setOnCheckedChangeListener { _, isChecked ->
+            gMap.isTrafficEnabled = isChecked
+            if (isChecked) shortToast("Traffic enabled") else shortToast("Traffic disabled")
+        }
+        testButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) shortToast("1 - On") else shortToast("1 - Off")
+        }
+        testButton2.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) shortToast("2 - On") else shortToast("2 - Off")
+        }
+        testButton3.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) shortToast("3 - On") else shortToast("3 - Off")
         }
     }
 
@@ -188,7 +211,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             if (grantResults.isNotEmpty() && grantResults[0] == PERMISSION_GRANTED)
                 getUserPosition()
             else {
-                Toast.makeText(this, "Permission to access location denied. Please edit permissions.", Toast.LENGTH_LONG).show()
+                longToast("Permission to access location denied. Please edit permissions.")
                 startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.fromParts("package", packageName, null)
                 })
