@@ -74,8 +74,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             mapView = view
             fabMapButtonClicked()
         }
-        val bottomSheet = findViewById<View>(R.id.map_bottomSheet)
-        handleBottomSheetSwitches(bottomSheet)
     }
 
     private fun handleBottomSheetSwitches(bottomSheet: View?) {
@@ -182,11 +180,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap?) {
         googleMap ?: return
-        with(googleMap) {
+        gMap = googleMap
+        with(gMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
             addMarker(MarkerOptions().title(HALDEN_TITLE).position(HALDEN_POSITION))
-            gMap = this
         }
+        val bottomSheet = findViewById<View>(R.id.map_bottomSheet)
+        handleBottomSheetSwitches(bottomSheet)
     }
 
     private fun fabMapAddButtonMessage() {
