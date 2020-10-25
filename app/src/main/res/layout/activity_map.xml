@@ -11,6 +11,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="30dp"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
@@ -21,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_gravity="center|bottom"
-            android:layout_margin="16dp"
+            android:layout_margin="20dp"
             android:contentDescription="@string/submit"
             android:backgroundTint="@android:color/white"
             android:tint="@color/colorPrimaryDark" />
@@ -62,10 +63,14 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
+            android:layout_margin="20dp"
             android:contentDescription="@string/submit"
             android:backgroundTint="@color/colorAccent" />
 
     </fragment>
+
+    <include
+        layout="@layout/activity_map_bottom_sheet" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

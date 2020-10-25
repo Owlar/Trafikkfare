@@ -31,4 +31,7 @@
     <string name="news_list_item_road">Vei</string>
     <string name="news_list_item_county">Fylke</string>
     <string name="news_list_item_description">Beskrivelse</string>
+    <string name="up">Up</string>
+    <string name="traffic_no">Trafikk</string>
+    <string name="test">Test</string>
 </resources>
