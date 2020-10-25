@@ -8,6 +8,7 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -18,6 +19,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.*
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -82,14 +84,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             gMap.isTrafficEnabled = isChecked
             if (isChecked) shortToast("Traffic enabled") else shortToast("Traffic disabled")
         }
-        testButton.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) shortToast("1 - On") else shortToast("1 - Off")
+        setBuildings.setOnCheckedChangeListener { _, isChecked ->
+            gMap.isBuildingsEnabled = isChecked
+            if (isChecked) shortToast("Buildings enabled") else shortToast("Buildings disabled")
         }
-        testButton2.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) shortToast("2 - On") else shortToast("2 - Off")
+        setTerrainMap.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) shortToast("Terrain Map enabled") else shortToast("Terrain Map disabled")
+            gMap.setTerrainType(MAP_TYPE_TERRAIN, isChecked)
         }
-        testButton3.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) shortToast("3 - On") else shortToast("3 - Off")
+    }
+
+    private fun GoogleMap.setTerrainType(mapTypeTerrain: Int, switchIsChecked: Boolean) {
+        if (gMap.mapType == MAP_TYPE_NORMAL && switchIsChecked)
+            gMap.mapType = mapTypeTerrain
+        else {
+            gMap.mapType = MAP_TYPE_NORMAL
         }
     }
 

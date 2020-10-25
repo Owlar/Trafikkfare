@@ -34,4 +34,7 @@
     <string name="up">Up</string>
     <string name="traffic_no">Trafikk</string>
     <string name="test">Test</string>
+    <string name="terrain_map_no">Terrengkart</string>
+    <string name="hybrid_map_no">Hybridkart</string>
+    <string name="buildings_no">Bygninger</string>
 </resources>
