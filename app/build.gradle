@@ -65,4 +65,4 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 }
 
-//apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: "androidx.navigation.safeargs.kotlin"
