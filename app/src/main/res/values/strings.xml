@@ -37,4 +37,7 @@
     <string name="terrain_map_no">Terrengkart</string>
     <string name="hybrid_map_no">Hybridkart</string>
     <string name="buildings_no">Bygninger</string>
+    <string name="description_no">Beskrivelse</string>
+    <string name="title_no">Tittel</string>
+    <string name="edit_no">Rediger</string>
 </resources>

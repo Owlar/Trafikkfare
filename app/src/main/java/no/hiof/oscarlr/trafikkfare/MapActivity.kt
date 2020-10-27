@@ -2,7 +2,6 @@ package no.hiof.oscarlr.trafikkfare
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
@@ -12,7 +11,6 @@ import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -28,6 +26,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
+import kotlinx.android.synthetic.main.activity_map_custom_info_window.*
+import no.hiof.oscarlr.trafikkfare.util.CustomInfoWindow
 import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortToast
 
@@ -37,11 +37,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         private val HALDEN_POSITION = LatLng(59.12478, 11.38754)
 
         private const val HALDEN_TITLE = "Halden"
+        private const val HALDEN_DESCRIPTION = "By med eller uten farer"
         private const val MY_POSITION_TITLE = "I am here"
         private const val ZOOM_LEVEL_13 = 13f
         private const val ADD_DANGER_TO_MAP = "Click on the map to add a new danger"
         private const val DELETE_DANGER_FROM_MAP = "Click on a danger marker to delete it"
-        private const val DEFAULT_DANGER_TITLE = "Fare!"
+        private const val DEFAULT_DANGER_TITLE = "Fare"
+        private const val DEFAULT_DANGER_DESCRIPTION = "En fare"
     }
 
     private lateinit var client : FusedLocationProviderClient
@@ -57,6 +59,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private val fabRotateCounterclockwise : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_counterclockwise) }
 
     private var isExpanded = false
+
+    private val dangerMarkers = mutableListOf<MarkerOptions>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,11 +92,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         setTerrainMap.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) shortToast("Terrain Map enabled") else shortToast("Terrain Map disabled")
-            gMap.setTerrainType(MAP_TYPE_TERRAIN, isChecked)
+            gMap.setTerrain(MAP_TYPE_TERRAIN, isChecked)
         }
     }
 
-    private fun GoogleMap.setTerrainType(mapTypeTerrain: Int, switchIsChecked: Boolean) {
+    private fun GoogleMap.setTerrain(mapTypeTerrain: Int, switchIsChecked: Boolean) {
         if (gMap.mapType == MAP_TYPE_NORMAL && switchIsChecked)
             gMap.mapType = mapTypeTerrain
         else {
@@ -133,7 +137,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun addMarker(gMap: GoogleMap) {
         with(gMap) {
             setOnMapClickListener {
-                addMarker(MarkerOptions().title(DEFAULT_DANGER_TITLE).position(it).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger)))
+                addMarker(MarkerOptions().title(DEFAULT_DANGER_TITLE).snippet(DEFAULT_DANGER_DESCRIPTION).position(it).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger)))
                 moveCamera(CameraUpdateFactory.newLatLng(it))
                 setOnMapClickListener{}
             }
@@ -183,10 +187,16 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         gMap = googleMap
         with(gMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
-            addMarker(MarkerOptions().title(HALDEN_TITLE).position(HALDEN_POSITION))
+            addMarker(MarkerOptions().title(HALDEN_TITLE).snippet(HALDEN_DESCRIPTION).position(HALDEN_POSITION))
         }
         val bottomSheet = findViewById<View>(R.id.map_bottomSheet)
         handleBottomSheetSwitches(bottomSheet)
+        gMap.setInfoWindowAdapter(CustomInfoWindow(this))
+        gMap.setOnInfoWindowClickListener { editSelectedDanger() }
+    }
+
+    private fun editSelectedDanger() {
+
     }
 
     private fun fabMapAddButtonMessage() {
