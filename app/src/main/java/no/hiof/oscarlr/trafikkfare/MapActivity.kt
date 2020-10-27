@@ -7,7 +7,6 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -17,7 +16,8 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.*
+import com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL
+import com.google.android.gms.maps.GoogleMap.MAP_TYPE_TERRAIN
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -26,7 +26,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
-import kotlinx.android.synthetic.main.activity_map_custom_info_window.*
 import no.hiof.oscarlr.trafikkfare.util.CustomInfoWindow
 import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortToast
@@ -92,13 +91,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         setTerrainMap.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) shortToast("Terrain Map enabled") else shortToast("Terrain Map disabled")
-            gMap.setTerrain(MAP_TYPE_TERRAIN, isChecked)
+            MAP_TYPE_TERRAIN.setTerrain(isChecked)
         }
     }
 
-    private fun GoogleMap.setTerrain(mapTypeTerrain: Int, switchIsChecked: Boolean) {
+    private fun Int.setTerrain(switchIsChecked: Boolean) {
         if (gMap.mapType == MAP_TYPE_NORMAL && switchIsChecked)
-            gMap.mapType = mapTypeTerrain
+            gMap.mapType = this
         else {
             gMap.mapType = MAP_TYPE_NORMAL
         }
