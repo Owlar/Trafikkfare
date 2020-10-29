@@ -24,8 +24,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
+import no.hiof.oscarlr.trafikkfare.model.Danger
 import no.hiof.oscarlr.trafikkfare.util.CustomInfoWindow
 import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortToast
@@ -77,6 +80,22 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             mapView = view
             fabMapButtonClicked()
         }
+
+        val firestoreDb = FirebaseFirestore.getInstance()
+        val dangersCollectionReference = firestoreDb.collection("dangers")
+        generateDangerTestData(dangersCollectionReference)
+
+    }
+
+    private fun generateDangerTestData(dangersCollectionReference: CollectionReference) {
+        val dangersTestData = ArrayList<Danger>()
+
+        dangersTestData.add(Danger(1,"Takras", "Ikke parker ved veggen, takras kan forekomme", 1))
+        dangersTestData.add(Danger(2, "Kollisjon mellom personbiler", "Vei blokkert grunnet frontkollisjon mellom to personbiler", 2))
+        dangersTestData.add(Danger(3,"Glatte veier", "Vær obs på glatte veier", 3))
+
+        dangersTestData.forEach {danger -> dangersCollectionReference.add(danger)}
+
     }
 
     private fun handleBottomSheetSwitches(bottomSheet: View?) {
