@@ -15,7 +15,7 @@ import no.hiof.oscarlr.trafikkfare.model.Danger
 class DangerListFragment : Fragment() {
 
     companion object {
-        private const val DANGERS_TITLE_NO = "Farer"
+        private const val DANGERS_TITLE = "Farer"
     }
 
     private var dangers : ArrayList<Danger> = Danger.getDangers()
@@ -25,7 +25,7 @@ class DangerListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         if (activity is IMainActivity)
-            (activity as IMainActivity).setBarTitle(DANGERS_TITLE_NO)
+            (activity as IMainActivity).setBarTitle(DANGERS_TITLE)
         return inflater.inflate(R.layout.fragment_danger_list, container, false)
     }
 

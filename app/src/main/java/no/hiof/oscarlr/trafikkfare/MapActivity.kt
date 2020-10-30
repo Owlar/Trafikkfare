@@ -1,7 +1,6 @@
 package no.hiof.oscarlr.trafikkfare
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
@@ -10,7 +9,6 @@ import android.provider.Settings
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
@@ -26,7 +24,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_map.*
@@ -35,21 +32,17 @@ import kotlinx.android.synthetic.main.fragment_edit_danger.*
 import no.hiof.oscarlr.trafikkfare.model.Danger
 import no.hiof.oscarlr.trafikkfare.util.CustomInfoWindow
 import no.hiof.oscarlr.trafikkfare.util.longToast
+import no.hiof.oscarlr.trafikkfare.util.shortSnackbar
 import no.hiof.oscarlr.trafikkfare.util.shortToast
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     companion object {
         private val HALDEN_POSITION = LatLng(59.12478, 11.38754)
-
-        private const val HALDEN_TITLE = "Halden"
-        private const val HALDEN_DESCRIPTION = "By med eller uten farer"
-        private const val MY_POSITION_TITLE = "I am here"
         private const val ZOOM_LEVEL_13 = 13f
-        private const val ADD_DANGER_TO_MAP = "Click on the map to add a new danger"
-        private const val DELETE_DANGER_FROM_MAP = "Click on a danger marker to delete it"
+        private const val MY_POSITION_TITLE = "Her er jeg"
         private const val DEFAULT_DANGER_TITLE = "Fare"
-        private const val DEFAULT_DANGER_DESCRIPTION = "En fare"
+        private const val DEFAULT_DANGER_DESCRIPTION = "Dette er farlig"
     }
 
     private lateinit var client : FusedLocationProviderClient
@@ -58,9 +51,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var latLng : LatLng
     private lateinit var mapView : View
     private lateinit var gMap : GoogleMap
-
-    private lateinit var dangerTitle : TextView
-    private lateinit var dangerDescription : TextView
 
     private val fabOpen : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.fab_open) }
     private val fabClose : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.fab_close) }
@@ -148,12 +138,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         fabMap_add.setOnClickListener {
             fabMapButtonAddClicked(fabClose, fabRotateClockwise)
-            fabMapAddButtonMessage()
+            it.shortSnackbar("Add danger")
             addMarker(gMap)
         }
         fabMap_delete.setOnClickListener {
             fabMapButtonDeleteClicked(fabClose, fabRotateClockwise)
-            fabMapDeleteButtonMessage()
+            it.shortSnackbar("Delete danger")
             deleteMarker(gMap)
         }
     }
@@ -190,7 +180,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    @SuppressLint("RestrictedApi")
     private fun fabMapButtonAddClicked(fabClose: Animation, fabRotateClockwise: Animation) {
         fabMap_delete.startAnimation(fabClose)
         fabMap_add.startAnimation(fabClose)
@@ -200,7 +189,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         removeFabMapButtonContentUserInteraction()
     }
 
-    @SuppressLint("RestrictedApi")
     private fun fabMapButtonDeleteClicked(fabClose: Animation, fabRotateClockwise: Animation) {
         fabMap_delete.startAnimation(fabClose)
         fabMap_add.startAnimation(fabClose)
@@ -210,7 +198,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         removeFabMapButtonContentUserInteraction()
     }
 
-    @SuppressLint("RestrictedApi")
     private fun removeFabMapButtonContentUserInteraction() {
         fabMap_add.isClickable = false
         fabMap_add.visibility = View.INVISIBLE
@@ -231,6 +218,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
         gMap.setInfoWindowAdapter(CustomInfoWindow(this))
+
         val bottomSheet = findViewById<View>(R.id.map_bottomSheet)
         handleBottomSheetSwitches(bottomSheet)
     }
@@ -260,18 +248,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                     .title(marker.title)
                     .snippet(marker.snippet)
             }
-
         }
-
         view.visibility = View.GONE
-    }
-
-    private fun fabMapAddButtonMessage() {
-        Snackbar.make(mapView, ADD_DANGER_TO_MAP, Snackbar.LENGTH_LONG).setAction("Action", null).show()
-    }
-
-    private fun fabMapDeleteButtonMessage() {
-        Snackbar.make(mapView, DELETE_DANGER_FROM_MAP, Snackbar.LENGTH_LONG).setAction("Action", null).show()
     }
 
     private fun getUserPosition() {
@@ -303,7 +281,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 })
             }
         }
-
     }
+
+
 }
 

@@ -12,10 +12,6 @@ import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment() {
 
-    companion object {
-        private const val INVALID_CREDENTIALS = "Invalid credentials"
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,7 +33,7 @@ class LoginFragment : Fragment() {
                 it.findNavController().navigate(action)
             }
             else
-                Toast.makeText(it.context, INVALID_CREDENTIALS, Toast.LENGTH_LONG).show()
+                Toast.makeText(it.context, "Invalid credentials", Toast.LENGTH_LONG).show()
         }
     }
 

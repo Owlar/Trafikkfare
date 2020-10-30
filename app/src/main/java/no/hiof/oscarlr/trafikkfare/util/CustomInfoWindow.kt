@@ -1,5 +1,6 @@
 package no.hiof.oscarlr.trafikkfare.util
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.view.View
@@ -10,7 +11,9 @@ import no.hiof.oscarlr.trafikkfare.R
 
 class CustomInfoWindow(context: Context) : GoogleMap.InfoWindowAdapter {
 
-    var markerWindow = (context as Activity).layoutInflater.inflate(R.layout.activity_map_custom_info_window, null)
+    @SuppressLint("InflateParams")
+    var markerWindow =
+        (context as Activity).layoutInflater.inflate(R.layout.activity_map_custom_info_window, null)!!
 
     private fun windowText(marker: Marker, view: View) {
         val dangerTitle = view.findViewById<TextView>(R.id.infoWindowTitle)
