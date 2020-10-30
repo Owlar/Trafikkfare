@@ -6,20 +6,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import no.hiof.oscarlr.trafikkfare.util.shortToast
 
 
 class MainActivity : AppCompatActivity(), IMainActivity {
-
-    companion object {
-        private const val SOMETHING_WENT_WRONG = "Something went wrong"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +70,7 @@ class MainActivity : AppCompatActivity(), IMainActivity {
             findNavController(R.id.nav_host_fragment).navigate(action)
         }
         else
-            Toast.makeText(this, SOMETHING_WENT_WRONG, Toast.LENGTH_LONG).show()
+            shortToast("Something went wrong")
 
         Log.d("MainActivity", "Navigated to home")
     }
@@ -87,7 +83,7 @@ class MainActivity : AppCompatActivity(), IMainActivity {
             this.findNavController(R.id.nav_host_fragment).navigate(action)
         }
         else
-            Toast.makeText(this, SOMETHING_WENT_WRONG, Toast.LENGTH_LONG).show()
+            shortToast("Something went wrong")
         Log.d("MainActivity", "Navigated to dangers")
     }
 

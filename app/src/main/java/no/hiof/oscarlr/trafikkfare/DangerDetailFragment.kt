@@ -14,7 +14,7 @@ import no.hiof.oscarlr.trafikkfare.model.Danger
 class DangerDetailFragment : Fragment() {
 
     companion object {
-        private const val DANGER_TITLE_NO = "Fare"
+        private const val DANGER_TITLE = "Fare"
     }
 
     override fun onCreateView (
@@ -22,7 +22,7 @@ class DangerDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         if (activity is IMainActivity)
-            (activity as IMainActivity).setBarTitle(DANGER_TITLE_NO)
+            (activity as IMainActivity).setBarTitle(DANGER_TITLE)
         return inflater.inflate(R.layout.fragment_danger_detail, container, false)
     }
 
