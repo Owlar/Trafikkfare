@@ -170,7 +170,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 marker = addMarker(markerOptions)
                 moveCamera(CameraUpdateFactory.newLatLng(it))
                 markerList.add(markerOptions)
-                addMarker(markerOptions) //Add marker to map
                 setOnMapClickListener{}
             }
             setOnInfoWindowClickListener { editSelectedDanger(marker, gMap) }
@@ -254,7 +253,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun saveDanger(view: View, editedmarker: Marker, gMap: GoogleMap) {
         marker.title = editDangerTitle.text.toString()
         marker.snippet = editDangerDescription.text.toString()
-        /*val newDanger = MarkerOptions()
+        val newDanger = MarkerOptions()
         markerList.forEachIndexed { index, _ ->
             if (markerList[index].position == editedmarker.position) {
                 markerList[index] = newDanger
@@ -262,7 +261,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                     .snippet(marker.snippet)
             }
 
-        } */
+        }
 
         view.visibility = View.GONE
     }
