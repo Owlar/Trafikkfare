@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), IMainActivity {
                 else -> false
             }
         }
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(R.id.main_nav_host_fragment)
         setupBottomNavMenu(navController)
     }
 
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(), IMainActivity {
 
         if (usernameFromTextView.isNotEmpty()) {
             val action = HomeFragmentDirections.actionSeeHome(usernameFromTextView)
-            findNavController(R.id.nav_host_fragment).navigate(action)
+            findNavController(R.id.main_nav_host_fragment).navigate(action)
         }
         else
             Toast.makeText(this, SOMETHING_WENT_WRONG, Toast.LENGTH_LONG).show()
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(), IMainActivity {
 
         if (usernameFromTextView.isNotEmpty()) {
             val action = HomeFragmentDirections.actionSeeDangers(usernameFromTextView)
-            this.findNavController(R.id.nav_host_fragment).navigate(action)
+            this.findNavController(R.id.main_nav_host_fragment).navigate(action)
         }
         else
             Toast.makeText(this, SOMETHING_WENT_WRONG, Toast.LENGTH_LONG).show()

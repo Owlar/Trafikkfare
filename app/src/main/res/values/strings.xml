@@ -40,4 +40,9 @@
     <string name="description_no">Beskrivelse</string>
     <string name="title_no">Tittel</string>
     <string name="edit_no">Rediger</string>
+    <string name="edit_image">Edit image</string>
+    <string name="save">Save</string>
+    <string name="fab">FAB</string>
+    <string name="fab_add">FAB add</string>
+    <string name="fab_delete">FAB delete</string>
 </resources>

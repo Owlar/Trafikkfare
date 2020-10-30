@@ -15,7 +15,6 @@ class CustomInfoWindow(context: Context) : GoogleMap.InfoWindowAdapter {
     private fun windowText(marker: Marker, view: View) {
         val dangerTitle = view.findViewById<TextView>(R.id.infoWindowTitle)
         val dangerDescription = view.findViewById<TextView>(R.id.infoWindowDescription)
-
         dangerTitle.text = marker.title
         dangerDescription.text = marker.snippet
         //ImageView src is set in resource file instead of here

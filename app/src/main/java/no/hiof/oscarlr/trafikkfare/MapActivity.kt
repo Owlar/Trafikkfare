@@ -10,7 +10,9 @@ import android.provider.Settings
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -22,12 +24,14 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
+import kotlinx.android.synthetic.main.fragment_edit_danger.*
 import no.hiof.oscarlr.trafikkfare.model.Danger
 import no.hiof.oscarlr.trafikkfare.util.CustomInfoWindow
 import no.hiof.oscarlr.trafikkfare.util.longToast
@@ -50,10 +54,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var client : FusedLocationProviderClient
     private lateinit var mapFragment : SupportMapFragment
-    private lateinit var markerOptions : MarkerOptions
+    private lateinit var marker : Marker
     private lateinit var latLng : LatLng
     private lateinit var mapView : View
     private lateinit var gMap : GoogleMap
+
+    private lateinit var dangerTitle : TextView
+    private lateinit var dangerDescription : TextView
 
     private val fabOpen : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.fab_open) }
     private val fabClose : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.fab_close) }
@@ -62,7 +69,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private var isExpanded = false
 
-    private val dangerMarkers = mutableListOf<MarkerOptions>()
+    private val markerList = mutableListOf<MarkerOptions>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,7 +102,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         dangersTestData.add(Danger(3,"Glatte veier", "Vær obs på glatte veier", 3))
 
         dangersTestData.forEach {danger -> dangersCollectionReference.add(danger)}
-
     }
 
     private fun handleBottomSheetSwitches(bottomSheet: View?) {
@@ -155,17 +161,30 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun addMarker(gMap: GoogleMap) {
         with(gMap) {
             setOnMapClickListener {
-                addMarker(MarkerOptions().title(DEFAULT_DANGER_TITLE).snippet(DEFAULT_DANGER_DESCRIPTION).position(it).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.danger)))
+                val markerOptions = MarkerOptions()
+                    .title(DEFAULT_DANGER_TITLE)
+                    .snippet(DEFAULT_DANGER_DESCRIPTION)
+                    .position(it)
+                    .draggable(true)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.danger))
+                marker = addMarker(markerOptions)
                 moveCamera(CameraUpdateFactory.newLatLng(it))
+                markerList.add(markerOptions)
+                addMarker(markerOptions) //Add marker to map
                 setOnMapClickListener{}
             }
+            setOnInfoWindowClickListener { editSelectedDanger(marker, gMap) }
         }
     }
 
     private fun deleteMarker(gMap: GoogleMap) {
         with(gMap) {
             setOnMarkerClickListener { marker ->
-                marker.remove()
+                marker.remove() //Remove marker from map
+                markerList.forEachIndexed { index, _ ->
+                    if (markerList[index].position == marker.position)
+                        markerList.removeAt(index)
+                }
                 setOnMarkerClickListener{false}
                 true
             }
@@ -205,16 +224,47 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         gMap = googleMap
         with(gMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
-            addMarker(MarkerOptions().title(HALDEN_TITLE).snippet(HALDEN_DESCRIPTION).position(HALDEN_POSITION))
+            setOnMarkerClickListener {
+                marker = it
+                setOnInfoWindowClickListener { editSelectedDanger(marker, gMap) }
+                setOnMarkerClickListener{false}
+                true
+            }
         }
+        gMap.setInfoWindowAdapter(CustomInfoWindow(this))
         val bottomSheet = findViewById<View>(R.id.map_bottomSheet)
         handleBottomSheetSwitches(bottomSheet)
-        gMap.setInfoWindowAdapter(CustomInfoWindow(this))
-        gMap.setOnInfoWindowClickListener { editSelectedDanger() }
     }
 
-    private fun editSelectedDanger() {
+    private fun editSelectedDanger(marker: Marker, gMap: GoogleMap) {
+        val view = findViewById<ConstraintLayout>(R.id.editDangerLayout)
+        if (view.visibility != View.VISIBLE) {
+            view.visibility = View.VISIBLE
 
+            val markerTitle = marker.title
+            val markerDescription = marker.snippet
+
+            editDangerTitle.setText(markerTitle)
+            editDangerDescription.setText(markerDescription)
+
+            dangerSave.setOnClickListener { saveDanger(view, marker, gMap) }
+        }
+    }
+
+    private fun saveDanger(view: View, editedmarker: Marker, gMap: GoogleMap) {
+        marker.title = editDangerTitle.text.toString()
+        marker.snippet = editDangerDescription.text.toString()
+        /*val newDanger = MarkerOptions()
+        markerList.forEachIndexed { index, _ ->
+            if (markerList[index].position == editedmarker.position) {
+                markerList[index] = newDanger
+                    .title(marker.title)
+                    .snippet(marker.snippet)
+            }
+
+        } */
+
+        view.visibility = View.GONE
     }
 
     private fun fabMapAddButtonMessage() {
@@ -231,7 +281,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (location != null) {
                     mapFragment.getMapAsync {
                         latLng = LatLng(location.latitude, location.longitude)
-                        markerOptions = MarkerOptions().position(latLng)
+                        val markerOptions = MarkerOptions().position(latLng)
                             .title(MY_POSITION_TITLE)
                         it.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_LEVEL_13))
                         it.addMarker(markerOptions)

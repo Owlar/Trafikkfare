@@ -13,12 +13,12 @@
           "package_name": "no.hiof.oscarlr.trafikkfare"
         }
       },
-      "oauth_client":
+      "oauth_client": [
         {
           "client_id": "61109690967-e422ec89bfdsm9ej8nu9hi7ki3sg5ijb.apps.googleusercontent.com",
           "client_type": 3
         }
-      ,
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDTIpUFfeeSvkzBG76MfCpPGhS7U13xdfo"
