@@ -35,7 +35,7 @@
         android:autofillHints="@string/description_no"
         android:textColor="@android:color/black"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/dangerSave"
+        app:layout_constraintBottom_toTopOf="@+id/dangerSaveButton"
         app:layout_constraintEnd_toEndOf="@+id/editDangerTitle"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/editDangerTitle"/>
@@ -43,7 +43,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/dangerSave"
+        android:id="@+id/dangerSaveButton"
         android:text="@string/save"
         android:textColor="@color/colorPrimary"
         android:backgroundTint="@color/darkRed"
