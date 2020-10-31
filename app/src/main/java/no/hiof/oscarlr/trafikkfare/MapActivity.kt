@@ -166,7 +166,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 testSeeMarkers()
                 setOnMapClickListener{}
             }
-            setOnInfoWindowClickListener { editSelectedMarker() }
+            setOnMarkerClickListener {
+                setOnInfoWindowClickListener { editSelectedMarker(it) }
+                setOnMarkerClickListener {false}
+                true
+            }
         }
     }
 
@@ -218,25 +222,29 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         gMap = googleMap
         with(gMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
-            setOnMarkerClickListener {
-                setOnInfoWindowClickListener { editSelectedMarker() }
-                setOnMarkerClickListener {false}
-                true
+            setOnMapClickListener {
+                setOnMarkerClickListener {
+                    setOnInfoWindowClickListener { editSelectedMarker(it) }
+                    setOnMarkerClickListener {false}
+                    true
+                }
             }
         }
         val bottomSheet = findViewById<View>(R.id.map_bottomSheet)
         handleBottomSheetSwitches(bottomSheet)
     }
 
-    private fun editSelectedMarker() {
+    private fun editSelectedMarker(markerToEdit: Marker) {
         val view = findViewById<ConstraintLayout>(R.id.editDangerLayout)
         if (view.visibility != View.VISIBLE) {
             view.visibility = View.VISIBLE
 
             val textViewDangerTitle = findViewById<EditText>(R.id.editDangerTitle)
             val textViewDangerDescription = findViewById<EditText>(R.id.editDangerDescription)
-            textViewDangerTitle.setText(marker.title)
-            textViewDangerDescription.setText(marker.snippet)
+            textViewDangerTitle.setText(markerToEdit.title)
+            textViewDangerDescription.setText(markerToEdit.snippet)
+
+            marker = markerToEdit
 
             dangerSaveButton.setOnClickListener { saveMarkerToList(view) }
         }
@@ -253,6 +261,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         testSeeMarkers()
         updateMapMarker()
+
         editDangerView.visibility = View.GONE
     }
 
