@@ -12,7 +12,3 @@ fun Context.shortToast(msg: CharSequence) {
 fun Context.longToast(msg: CharSequence) {
     Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
 }
-
-fun View.shortSnackbar(msg: CharSequence) {
-    Snackbar.make(this, msg, Snackbar.LENGTH_SHORT).setAction("Action", null).show()
-}
