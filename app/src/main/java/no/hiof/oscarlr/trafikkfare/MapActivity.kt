@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_edit_danger.*
+import no.hiof.oscarlr.trafikkfare.helper.Firestore
 import no.hiof.oscarlr.trafikkfare.model.Danger
 import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortSnackbar
@@ -49,6 +50,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private var markerList = mutableListOf<Marker>()
+    private var markerIdCounter = 0
+    private var createdDangers = ArrayList<Danger>()
 
     private lateinit var client : FusedLocationProviderClient
     private lateinit var mapFragment : SupportMapFragment
@@ -57,6 +60,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var latLng : LatLng
     private lateinit var mapView : View
     private lateinit var gMap : GoogleMap
+    private lateinit var danger : Danger
 
     private val fabOpen : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.fab_open) }
     private val fabClose : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.fab_close) }
@@ -84,10 +88,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val firestoreDb = FirebaseFirestore.getInstance()
         val dangersCollectionReference = firestoreDb.collection("dangers")
-        generateDangerTestData(dangersCollectionReference)
+        //generateDangerTestData(dangersCollectionReference)
 
     }
 
+    /*
     private fun generateDangerTestData(dangersCollectionReference: CollectionReference) {
         val dangersTestData = ArrayList<Danger>()
 
@@ -97,6 +102,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         dangersTestData.forEach {danger -> dangersCollectionReference.add(danger)}
     }
+    */
 
     private fun handleBottomSheetSwitches(bottomSheet: View?) {
         bottomSheet ?: return
@@ -270,6 +276,17 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         val textViewDangerDescription = findViewById<EditText>(R.id.editDangerDescription)
         marker.title = textViewDangerTitle.text.toString()
         marker.snippet = textViewDangerDescription.text.toString()
+
+        dangerCreated()
+    }
+
+    private fun dangerCreated() {
+        danger = Danger(++markerIdCounter, marker.title, marker.snippet, 1, marker.position)
+        //createdDangers.add(danger)
+
+        //Danger.setDangers(createdDangers)
+
+        Firestore.setDanger(danger)
     }
 
     private fun getUserPosition() {
