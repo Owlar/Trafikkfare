@@ -12,14 +12,19 @@ class Firestore {
         fun setDanger(danger: Danger) {
             val firestoreDb = FirebaseFirestore.getInstance()
             firestoreDb.collection("dangers")
-                .document(danger.title)
+                .document(danger.uid.toString())
                 .set(danger)
                 .addOnSuccessListener { Log.d("TAG", "DocumentSnapshot successfully written") }
                 .addOnFailureListener { e -> Log.w("TAG", "Error writing document", e) }
         }
 
         fun deleteDanger(danger: Danger) {
-
+            val firestoreDb = FirebaseFirestore.getInstance()
+            firestoreDb.collection("dangers")
+                .document(danger.uid.toString())
+                .delete()
+                .addOnSuccessListener { Log.d("TAG", "DocumentSnapshot successfully deleted") }
+                .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
         }
 
         fun getAllDangers() {

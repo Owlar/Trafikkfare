@@ -29,7 +29,7 @@ class DangerDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val arguments = arguments?.let { DangerDetailFragmentArgs.fromBundle(it) }
-        val danger = Danger.getDangers()[arguments!!.uid]
+        val danger = Danger.getTestDangers()[arguments!!.uid]
 
         dangerTitleTextView.text = danger.title
         dangerPosterImageView.setImageResource(danger.posterUrl)

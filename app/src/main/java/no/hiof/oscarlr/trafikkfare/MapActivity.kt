@@ -26,13 +26,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_edit_danger.*
 import no.hiof.oscarlr.trafikkfare.helper.Firestore
 import no.hiof.oscarlr.trafikkfare.model.Danger
+import no.hiof.oscarlr.trafikkfare.util.getUniqueId
 import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortSnackbar
 import no.hiof.oscarlr.trafikkfare.util.shortToast
@@ -86,13 +86,18 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             fabMapButtonClicked()
         }
 
+        /*
+
         val firestoreDb = FirebaseFirestore.getInstance()
         val dangersCollectionReference = firestoreDb.collection("dangers")
-        //generateDangerTestData(dangersCollectionReference)
+        generateDangerTestData(dangersCollectionReference)
+
+         */
 
     }
 
     /*
+
     private fun generateDangerTestData(dangersCollectionReference: CollectionReference) {
         val dangersTestData = ArrayList<Danger>()
 
@@ -102,6 +107,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         dangersTestData.forEach {danger -> dangersCollectionReference.add(danger)}
     }
+
     */
 
     private fun handleBottomSheetSwitches(bottomSheet: View?) {
@@ -185,6 +191,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             setOnMarkerClickListener {
                 markerList.remove(it)
                 it.remove() //Remove marker from map
+                deleteFromFirestore(it)
                 testSeeMarkers()
                 setOnMarkerClickListener{false}
                 true
@@ -192,11 +199,19 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    //START REGION: FOR TESTING PURPOSES
     private fun testSeeMarkers() {
         markerList.forEach {
             Log.d("MapActivity", "${it.id} - ${it.title} - ${it.snippet}")
         }
     }
+
+    private fun testSeeDangers() {
+        Danger.getDangers().forEach {
+            Log.d("TAG", it.toString())
+        }
+    }
+    //END REGION: FOR TESTING PURPOSES
 
     private fun fabMapButtonAddClicked(fabClose: Animation, fabRotateClockwise: Animation) {
         fabMap_delete.startAnimation(fabClose)
@@ -277,16 +292,25 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         marker.title = textViewDangerTitle.text.toString()
         marker.snippet = textViewDangerDescription.text.toString()
 
-        dangerCreated()
+        addToFirestore()
     }
 
-    private fun dangerCreated() {
-        danger = Danger(++markerIdCounter, marker.title, marker.snippet, 1, marker.position)
-        //createdDangers.add(danger)
-
-        //Danger.setDangers(createdDangers)
-
+    private fun addToFirestore() {
+        val dangerUniqueId = getUniqueId(marker.id)
+        danger = Danger(dangerUniqueId, marker.title, marker.snippet, 1, marker.position)
         Firestore.setDanger(danger)
+
+        createdDangers.add(danger)
+        Danger.setDangers(createdDangers)
+
+        testSeeDangers()
+    }
+
+    private fun deleteFromFirestore(it: Marker) {
+        marker = it
+        val dangerUniqueId = getUniqueId(marker.id)
+        val danger = Danger(dangerUniqueId, it.title, it.snippet, 1, it.position)
+        Firestore.deleteDanger(danger)
     }
 
     private fun getUserPosition() {

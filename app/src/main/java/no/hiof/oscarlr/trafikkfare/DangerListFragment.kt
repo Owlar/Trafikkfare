@@ -18,7 +18,7 @@ class DangerListFragment : Fragment() {
         private const val DANGERS_TITLE = "Farer"
     }
 
-    private var dangers : ArrayList<Danger> = Danger.getDangers()
+    private var dangers : ArrayList<Danger> = Danger.getTestDangers()
 
     override fun onCreateView (
         inflater: LayoutInflater, container: ViewGroup?,
