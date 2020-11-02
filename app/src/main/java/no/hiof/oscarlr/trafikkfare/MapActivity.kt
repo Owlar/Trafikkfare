@@ -26,7 +26,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_edit_danger.*
@@ -85,6 +84,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             mapView = view
             fabMapButtonClicked()
         }
+        Firestore.getAllDangers()
 
         /*
 
@@ -243,6 +243,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         gMap = googleMap
         with(gMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
+            retrieveDangersAndPlaceAsMarkers(gMap)
             setOnMapClickListener {
                 setOnMarkerClickListener {
                     setOnInfoWindowClickListener { editSelectedMarker(it) }
@@ -253,6 +254,18 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         val bottomSheet = findViewById<View>(R.id.map_bottomSheet)
         handleBottomSheetSwitches(bottomSheet)
+    }
+
+    private fun retrieveDangersAndPlaceAsMarkers(gMap: GoogleMap) {
+        Danger.getDangers().forEach {
+            markerOptions = MarkerOptions()
+                .title(it.title)
+                .snippet(it.description)
+                .position(LatLng(it.latitude, it.longitude))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.danger))
+            marker = gMap.addMarker(markerOptions)
+            markerList.add(marker)
+        }
     }
 
     private fun editSelectedMarker(markerToEdit: Marker) {
@@ -297,7 +310,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun addToFirestore() {
         val dangerUniqueId = getUniqueId(marker.id)
-        danger = Danger(dangerUniqueId, marker.title, marker.snippet, 1, marker.position)
+        danger = Danger(dangerUniqueId, marker.title, marker.snippet, 1, marker.position.latitude, marker.position.longitude)
         Firestore.setDanger(danger)
 
         createdDangers.add(danger)
@@ -309,7 +322,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun deleteFromFirestore(it: Marker) {
         marker = it
         val dangerUniqueId = getUniqueId(marker.id)
-        val danger = Danger(dangerUniqueId, it.title, it.snippet, 1, it.position)
+        val danger = Danger(dangerUniqueId, it.title, it.snippet, 1, it.position.latitude, it.position.longitude)
         Firestore.deleteDanger(danger)
     }
 

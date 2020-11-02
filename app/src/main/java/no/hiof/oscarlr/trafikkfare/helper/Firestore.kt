@@ -3,6 +3,7 @@ package no.hiof.oscarlr.trafikkfare.helper
 import android.util.Log
 import com.google.android.gms.maps.model.Marker
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import no.hiof.oscarlr.trafikkfare.model.Danger
 
 class Firestore {
@@ -28,7 +29,16 @@ class Firestore {
         }
 
         fun getAllDangers() {
-            //Get from Danger model
+            val firestoreDb = FirebaseFirestore.getInstance()
+            val docRef = firestoreDb.collection("dangers")
+            val dangerList = ArrayList<Danger>()
+            docRef.get().addOnSuccessListener {
+                it.forEach { document ->
+                    val danger : Danger = document.toObject(Danger::class.java)
+                    dangerList.add(danger)
+                }
+                Danger.setFromFirestore(dangerList)
+            }
         }
 
 
