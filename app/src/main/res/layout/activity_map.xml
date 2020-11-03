@@ -72,7 +72,5 @@
 
     <include
         layout="@layout/activity_map_bottom_sheet" />
-    <include
-        layout="@layout/fragment_edit_danger" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

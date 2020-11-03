@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/editDangerLayout"
-    android:visibility="gone"
     android:layout_marginTop="520dp"
     android:background="@color/colorPrimary"
     android:layout_width="match_parent"

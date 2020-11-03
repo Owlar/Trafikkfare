@@ -12,7 +12,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -26,6 +25,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_edit_danger.*
@@ -36,12 +36,13 @@ import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortSnackbar
 import no.hiof.oscarlr.trafikkfare.util.shortToast
 
-class MapActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFragment.EditDangerBottomSheetListener {
 
     companion object {
         private val HALDEN_POSITION = LatLng(59.12478, 11.38754)
         private const val ZOOM_LEVEL_13 = 13f
-        private const val MY_POSITION_TITLE = "Her er jeg"
+        private const val MY_POSITION_TITLE = "Min posisjon"
+        private const val MY_POSITION_DESCRIPTION = "Her befinner jeg meg"
 
         //To have something to show upon adding marker to map
         private const val DEFAULT_MARKER_TITLE = "Fare"
@@ -269,22 +270,24 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun editSelectedMarker(markerToEdit: Marker) {
-        val view = findViewById<ConstraintLayout>(R.id.editDangerLayout)
-        if (view.visibility != View.VISIBLE) {
-            view.visibility = View.VISIBLE
+        marker = markerToEdit
+        showEditDangerDialog()
 
-            val textViewDangerTitle = findViewById<EditText>(R.id.editDangerTitle)
-            val textViewDangerDescription = findViewById<EditText>(R.id.editDangerDescription)
-            textViewDangerTitle.setText(markerToEdit.title)
-            textViewDangerDescription.setText(markerToEdit.snippet)
-
-            marker = markerToEdit
-
-            dangerSaveButton.setOnClickListener { saveMarkerToList(view) }
-        }
+        saveMarkerToList()
     }
 
-    private fun saveMarkerToList(editDangerView: View) {
+    private fun showEditDangerDialog() {
+        val editDangerModal = EditDangerModalFragment()
+        editDangerModal.show(supportFragmentManager, "editDangerModal")
+    }
+
+    override fun saveDangerButtonClicked(editedMarkerTitle: String, editedMarkerDescription: String) {
+        marker.title = editedMarkerTitle
+        marker.snippet = editedMarkerDescription
+        saveMarkerToList()
+    }
+
+    private fun saveMarkerToList() {
         markerList.forEachIndexed {i, m ->
             if (m == marker) {
                 markerList[i] = marker
@@ -294,17 +297,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             marker.hideInfoWindow()
 
         testSeeMarkers()
-        updateMapMarker()
-
-        editDangerView.visibility = View.GONE
-    }
-
-    private fun updateMapMarker() {
-        val textViewDangerTitle = findViewById<EditText>(R.id.editDangerTitle)
-        val textViewDangerDescription = findViewById<EditText>(R.id.editDangerDescription)
-        marker.title = textViewDangerTitle.text.toString()
-        marker.snippet = textViewDangerDescription.text.toString()
-
         addToFirestore()
     }
 
@@ -334,6 +326,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                         latLng = LatLng(location.latitude, location.longitude)
                         val markerOptions = MarkerOptions().position(latLng)
                             .title(MY_POSITION_TITLE)
+                            .snippet(MY_POSITION_DESCRIPTION)
                         it.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_LEVEL_13))
                         it.addMarker(markerOptions)
                     }
@@ -356,7 +349,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-
 
 }
 
