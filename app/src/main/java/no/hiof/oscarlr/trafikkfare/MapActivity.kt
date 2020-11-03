@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -25,10 +24,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
-import kotlinx.android.synthetic.main.fragment_edit_danger.*
 import no.hiof.oscarlr.trafikkfare.helper.Firestore
 import no.hiof.oscarlr.trafikkfare.model.Danger
 import no.hiof.oscarlr.trafikkfare.util.getUniqueId
@@ -176,7 +173,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
                 moveCamera(CameraUpdateFactory.newLatLng(marker.position))
 
                 markerList.add(marker)
-                testSeeMarkers()
+                //testSeeMarkers()
                 setOnMapClickListener{}
             }
             setOnMarkerClickListener {
@@ -193,7 +190,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
                 markerList.remove(it)
                 it.remove() //Remove marker from map
                 deleteFromFirestore(it)
-                testSeeMarkers()
+                //testSeeMarkers()
                 setOnMarkerClickListener{false}
                 true
             }
@@ -278,6 +275,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
 
     private fun showEditDangerDialog() {
         val editDangerModal = EditDangerModalFragment()
+        editDangerModal.updateVariables(marker.title, marker.snippet)
         editDangerModal.show(supportFragmentManager, "editDangerModal")
     }
 
@@ -296,7 +294,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         if (marker.isInfoWindowShown)
             marker.hideInfoWindow()
 
-        testSeeMarkers()
+        //testSeeMarkers()
         addToFirestore()
     }
 
@@ -308,7 +306,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         createdDangers.add(danger)
         Danger.setDangers(createdDangers)
 
-        testSeeDangers()
+        //testSeeDangers()
     }
 
     private fun deleteFromFirestore(it: Marker) {
