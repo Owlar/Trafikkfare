@@ -275,7 +275,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
 
     private fun showEditDangerDialog() {
         val editDangerModal = EditDangerModalFragment()
-        editDangerModal.updateVariables(marker.title, marker.snippet)
+        val args = Bundle()
+        args.putString("argTitle", marker.title)
+        args.putString("argDescription", marker.snippet)
+        editDangerModal.arguments = args
         editDangerModal.show(supportFragmentManager, "editDangerModal")
     }
 

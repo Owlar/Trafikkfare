@@ -10,13 +10,10 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_edit_danger.*
 import kotlinx.android.synthetic.main.fragment_edit_danger.view.*
-import java.lang.ClassCastException
 
 class EditDangerModalFragment : BottomSheetDialogFragment() {
 
     private lateinit var editDangerBottomSheetListener : EditDangerBottomSheetListener
-    private lateinit var titleText : String
-    private lateinit var descriptionText : String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,7 +22,14 @@ class EditDangerModalFragment : BottomSheetDialogFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_edit_danger, container, false)
         val saveButton = view.findViewById<Button>(R.id.dangerSaveButton)
-        setText(view)
+
+        if (arguments != null) {
+            val title = arguments?.getString("argTitle")
+            val description = arguments?.getString("argDescription")
+            view.editDangerTitle.setText(title)
+            view.editDangerDescription.setText(description)
+        }
+
         saveButton.setOnClickListener {
             if (editDangerTitle.text.toString().isNotEmpty() && editDangerDescription.text.toString().isNotEmpty()) {
                 editDangerBottomSheetListener.saveDangerButtonClicked(
@@ -39,17 +43,6 @@ class EditDangerModalFragment : BottomSheetDialogFragment() {
         }
 
         return view
-    }
-
-    private fun setText(view: View) {
-        view.editDangerTitle.setText(titleText)
-        view.editDangerDescription.setText(descriptionText)
-    }
-
-    //Passed from MapActivity
-    fun updateVariables(title: String, description: String) {
-        titleText = title
-        descriptionText = description
     }
 
     interface EditDangerBottomSheetListener {

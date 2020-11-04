@@ -1,9 +1,7 @@
 package no.hiof.oscarlr.trafikkfare.helper
 
 import android.util.Log
-import com.google.android.gms.maps.model.Marker
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import no.hiof.oscarlr.trafikkfare.model.Danger
 
 class Firestore {

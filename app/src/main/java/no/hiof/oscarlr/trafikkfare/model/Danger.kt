@@ -1,8 +1,5 @@
 package no.hiof.oscarlr.trafikkfare.model
 
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import no.hiof.oscarlr.trafikkfare.MapActivity
 import no.hiof.oscarlr.trafikkfare.R
 
 data class Danger(val uid : Int = 0,
