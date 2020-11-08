@@ -47,7 +47,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
     }
 
     private var markerList = mutableListOf<Marker>()
-    private var markerIdCounter = 0
     private var createdDangers = ArrayList<Danger>()
 
     private lateinit var client : FusedLocationProviderClient
@@ -72,6 +71,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
 
         mapFragment = (supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment)!!
         mapFragment.getMapAsync(this)
+
+        markerList.clear()
 
         client = LocationServices.getFusedLocationProviderClient(this)
 
@@ -173,7 +174,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
                 moveCamera(CameraUpdateFactory.newLatLng(marker.position))
 
                 markerList.add(marker)
-                //testSeeMarkers()
                 setOnMapClickListener{}
             }
             setOnMarkerClickListener {
@@ -190,7 +190,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
                 markerList.remove(it)
                 it.remove() //Remove marker from map
                 deleteFromFirestore(it)
-                //testSeeMarkers()
                 setOnMarkerClickListener{false}
                 true
             }
@@ -237,8 +236,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        googleMap ?: return
-        gMap = googleMap
+        gMap = googleMap ?: return
         with(gMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
             retrieveDangersAndPlaceAsMarkers(gMap)
@@ -269,8 +267,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
     private fun editSelectedMarker(markerToEdit: Marker) {
         marker = markerToEdit
         showEditDangerDialog()
-
-        saveMarkerToList()
     }
 
     private fun showEditDangerDialog() {
@@ -286,6 +282,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         marker.title = editedMarkerTitle
         marker.snippet = editedMarkerDescription
         saveMarkerToList()
+        addToFirestore()
     }
 
     private fun saveMarkerToList() {
@@ -296,9 +293,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         }
         if (marker.isInfoWindowShown)
             marker.hideInfoWindow()
-
-        //testSeeMarkers()
-        addToFirestore()
     }
 
     private fun addToFirestore() {
@@ -308,8 +302,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
 
         createdDangers.add(danger)
         Danger.setDangers(createdDangers)
-
-        //testSeeDangers()
     }
 
     private fun deleteFromFirestore(it: Marker) {
@@ -317,6 +309,15 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         val dangerUniqueId = getUniqueId(marker.id)
         val danger = Danger(dangerUniqueId, it.title, it.snippet, 1, it.position.latitude, it.position.longitude)
         Firestore.deleteDanger(danger)
+
+        createdDangers.remove(danger)
+        Danger.setDangers(createdDangers)
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        markerList.clear()
     }
 
     private fun getUserPosition() {
