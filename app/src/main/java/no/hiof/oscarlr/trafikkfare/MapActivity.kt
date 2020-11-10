@@ -24,6 +24,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
 import no.hiof.oscarlr.trafikkfare.helper.Firestore
@@ -85,14 +87,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         }
         Firestore.getAllDangers()
 
-        /*
-
-        val firestoreDb = FirebaseFirestore.getInstance()
-        val dangersCollectionReference = firestoreDb.collection("dangers")
-        generateDangerTestData(dangersCollectionReference)
-
-         */
-
+        //generateDangerTestData(dangersCollectionReference)
     }
 
     /*
@@ -239,7 +234,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         gMap = googleMap ?: return
         with(gMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
-            retrieveDangersAndPlaceAsMarkers(gMap)
+
+            val firestoreDb = FirebaseFirestore.getInstance()
+            val dangersCollectionReference = firestoreDb.collection("dangers")
+
+            dangersCollectionReference.get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val dangerList = ArrayList<Danger>()
+                    for (document in it.result) {
+                        val danger : Danger = document.toObject(Danger::class.java)
+                        dangerList.add(danger)
+                    }
+                    Danger.setFromFirestore(dangerList)
+                    retrieveDangersAndPlaceAsMarkers(gMap)
+                }
+            }
             setOnMapClickListener {
                 setOnMarkerClickListener {
                     setOnInfoWindowClickListener { editSelectedMarker(it) }
