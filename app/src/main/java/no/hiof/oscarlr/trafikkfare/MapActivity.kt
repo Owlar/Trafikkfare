@@ -1,8 +1,10 @@
 package no.hiof.oscarlr.trafikkfare
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -35,6 +37,7 @@ import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortSnackbar
 import no.hiof.oscarlr.trafikkfare.util.shortToast
 
+@Suppress("DEPRECATION")
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFragment.EditDangerBottomSheetListener {
 
     companion object {
@@ -288,10 +291,18 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
     }
 
     override fun saveDangerButtonClicked(editedMarkerTitle: String, editedMarkerDescription: String) {
-        marker.title = editedMarkerTitle
-        marker.snippet = editedMarkerDescription
-        saveMarkerToList()
-        addToFirestore()
+        if (isConnectedToInternet()) {
+            marker.title = editedMarkerTitle
+            marker.snippet = editedMarkerDescription
+            saveMarkerToList()
+            addToFirestore()
+        } else
+            longToast("Du må være tilkoblet internett for å lagre en fare")
+    }
+
+    private fun isConnectedToInternet(): Boolean {
+        val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        return connectivityManager?.activeNetworkInfo?.isConnectedOrConnecting ?: false
     }
 
     private fun saveMarkerToList() {
