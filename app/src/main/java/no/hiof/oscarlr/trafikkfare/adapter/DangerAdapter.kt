@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.danger_list_item.view.*
 import no.hiof.oscarlr.trafikkfare.R
-import no.hiof.oscarlr.trafikkfare.model.Danger
+import no.hiof.oscarlr.trafikkfare.model.DangerData
 
-class DangerAdapter (private val items: ArrayList<Danger>, private var clickListener: View.OnClickListener) : RecyclerView.Adapter<DangerAdapter.DangerViewHolder>() {
+class DangerAdapter (private val items: ArrayList<DangerData>, private var clickListener: View.OnClickListener) : RecyclerView.Adapter<DangerAdapter.DangerViewHolder>() {
     override fun getItemCount(): Int {
         return items.size
     }
@@ -29,7 +29,7 @@ class DangerAdapter (private val items: ArrayList<Danger>, private var clickList
         private val dangerPosterImageView = view.dangerPosterImageView
         private val dangerTitleTextView = view.dangerTitleTextView
 
-        fun bind(item: Danger, clickListener: View.OnClickListener) {
+        fun bind(item: DangerData, clickListener: View.OnClickListener) {
             dangerPosterImageView.setImageResource(item.posterUrl)
             dangerTitleTextView.text = item.title
             this.itemView.setOnClickListener(clickListener)

@@ -37,7 +37,6 @@ class LoginFragment : Fragment() {
         }
     }
 
-    //Show bars in home fragment when login is successful
     override fun onDestroyView() {
         super.onDestroyView()
         if (activity is IMainActivity)

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package no.hiof.oscarlr.trafikkfare
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -14,6 +16,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -26,13 +29,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
 import no.hiof.oscarlr.trafikkfare.helper.Firestore
 import no.hiof.oscarlr.trafikkfare.model.Danger
-import no.hiof.oscarlr.trafikkfare.util.getUniqueId
 import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortSnackbar
 import no.hiof.oscarlr.trafikkfare.util.shortToast
@@ -77,8 +78,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         mapFragment = (supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment)!!
         mapFragment.getMapAsync(this)
 
-        markerList.clear()
-
         client = LocationServices.getFusedLocationProviderClient(this)
 
         myLocation.setOnClickListener {
@@ -88,24 +87,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             mapView = view
             fabMapButtonClicked()
         }
+
         Firestore.getAllDangers()
-
-        //generateDangerTestData(dangersCollectionReference)
     }
-
-    /*
-
-    private fun generateDangerTestData(dangersCollectionReference: CollectionReference) {
-        val dangersTestData = ArrayList<Danger>()
-
-        dangersTestData.add(Danger(1,"Takras", "Ikke parker ved veggen, takras kan forekomme", 1))
-        dangersTestData.add(Danger(2, "Kollisjon mellom personbiler", "Vei blokkert grunnet frontkollisjon mellom to personbiler", 2))
-        dangersTestData.add(Danger(3,"Glatte veier", "Vær obs på glatte veier", 3))
-
-        dangersTestData.forEach {danger -> dangersCollectionReference.add(danger)}
-    }
-
-    */
 
     private fun handleBottomSheetSwitches(bottomSheet: View?) {
         bottomSheet ?: return
@@ -176,7 +160,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             }
             setOnMarkerClickListener {
                 setOnInfoWindowClickListener { editSelectedMarker(it) }
-                setOnMarkerClickListener {false}
+                setOnMarkerClickListener { false }
                 true
             }
         }
@@ -188,7 +172,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
                 markerList.remove(it)
                 it.remove() //Remove marker from map
                 deleteFromFirestore(it)
-                setOnMarkerClickListener{false}
+                setOnMarkerClickListener{ false }
                 true
             }
         }
@@ -252,12 +236,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
                     retrieveDangersAndPlaceAsMarkers(gMap)
                 }
             }
-            setOnMapClickListener {
-                setOnMarkerClickListener {
-                    setOnInfoWindowClickListener { editSelectedMarker(it) }
-                    setOnMarkerClickListener {false}
-                    true
-                }
+            setOnMarkerClickListener {
+                setOnInfoWindowClickListener { editSelectedMarker(it) }
+                setOnMarkerClickListener { false }
+                true
             }
         }
         val bottomSheet = findViewById<View>(R.id.map_bottomSheet)
@@ -316,7 +298,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
     }
 
     private fun addToFirestore() {
-        val dangerUniqueId = getUniqueId(marker.id)
+        val dangerUniqueId = marker.id.toString()
         danger = Danger(dangerUniqueId, marker.title, marker.snippet, 1, marker.position.latitude, marker.position.longitude)
         Firestore.setDanger(danger)
 
@@ -326,7 +308,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
 
     private fun deleteFromFirestore(it: Marker) {
         marker = it
-        val dangerUniqueId = getUniqueId(marker.id)
+        val dangerUniqueId = marker.id.toString()
         val danger = Danger(dangerUniqueId, it.title, it.snippet, 1, it.position.latitude, it.position.longitude)
         Firestore.deleteDanger(danger)
 
@@ -338,6 +320,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
     override fun onDestroy() {
         super.onDestroy()
         markerList.clear()
+        gMap.clear()
     }
 
     private fun getUserPosition() {

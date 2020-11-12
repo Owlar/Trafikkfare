@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_danger_list.*
 import no.hiof.oscarlr.trafikkfare.adapter.DangerAdapter
 import no.hiof.oscarlr.trafikkfare.model.Danger
+import no.hiof.oscarlr.trafikkfare.model.DangerData
 
 class DangerListFragment : Fragment() {
 
@@ -18,7 +19,7 @@ class DangerListFragment : Fragment() {
         private const val DANGERS_TITLE = "Farer"
     }
 
-    private var dangers : ArrayList<Danger> = Danger.getTestDangers()
+    private var dangers : ArrayList<DangerData> = DangerData.getTestDangers()
 
     override fun onCreateView (
         inflater: LayoutInflater, container: ViewGroup?,
