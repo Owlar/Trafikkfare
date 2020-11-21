@@ -13,10 +13,24 @@ class SplashScreenMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen_main)
 
         Handler().postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+
+            doWork()
+
         }, 1000)
 
+    }
+
+    private fun doWork() {
+
+        // Work to be done
+
+        // When work is done
+        startMainActivity()
+    }
+
+    private fun startMainActivity() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
 }

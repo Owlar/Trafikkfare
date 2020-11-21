@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), IMainActivity {
                     navigateToDangers()
                 }
                 R.id.map_dest -> {
-                    navigateToMap()
+                    navigateToMapSplashScreen()
                 }
             }
             true
@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity(), IMainActivity {
         Log.d("MainActivity", "Navigated to dangers")
     }
 
-    private fun navigateToMap() {
-        startActivity(Intent(this, MapActivity::class.java))
+    private fun navigateToMapSplashScreen() {
+        startActivity(Intent(this, SplashScreenMapActivity::class.java))
     }
 
     override fun hideBars(isShown: Boolean) {

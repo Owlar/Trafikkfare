@@ -20,6 +20,7 @@
         tools:ignore="GoogleAppIndexWarning">
 
         <activity android:name=".MapActivity" android:configChanges="orientation|screenSize" />
+        <activity android:name=".SplashScreenMapActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SplashScreenMainActivity">
             <intent-filter>
