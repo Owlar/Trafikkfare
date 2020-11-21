@@ -16,7 +16,7 @@ class SplashScreenMainActivity : AppCompatActivity() {
 
             doWork()
 
-        }, 1000)
+        }, 500)
 
     }
 

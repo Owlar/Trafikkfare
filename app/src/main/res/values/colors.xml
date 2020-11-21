@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">@android:color/black</color>
     <color name="colorAccent">#f82323</color>
     <color name="darkRed">#280008</color>
+
+    <color name="colorSeverityMinor">#A0B046</color>
+    <color name="colorSeverityMajor">#F2C94E</color>
+    <color name="colorSeverityCritical">#F78145</color>
+    <color name="colorSeverityCatastrophic">#F24E4E</color>
 </resources>

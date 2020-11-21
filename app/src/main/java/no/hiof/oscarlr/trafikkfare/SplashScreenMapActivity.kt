@@ -24,6 +24,7 @@ class SplashScreenMapActivity : AppCompatActivity() {
         finish()
     }
 
+    //Put in companion object due to memory leaks in inner class setup
     companion object {
 
         private class AsyncTaskWorker(private val splashScreenMapActivity: SplashScreenMapActivity) : AsyncTask<Void, String, Boolean>() {
@@ -38,9 +39,7 @@ class SplashScreenMapActivity : AppCompatActivity() {
             }
 
             override fun onPostExecute(result: Boolean?) {
-                if (result!!)
-                    splashScreenMapActivity.startMapActivity()
-
+                if (result!!) splashScreenMapActivity.startMapActivity()
             }
 
             override fun onProgressUpdate(vararg values: String?) {

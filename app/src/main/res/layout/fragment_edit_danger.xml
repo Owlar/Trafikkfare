@@ -34,10 +34,47 @@
         android:autofillHints="@string/description_no"
         android:textColor="@android:color/black"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/dangerSaveButton"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintEnd_toEndOf="@+id/editDangerTitle"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/editDangerTitle"/>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/editDangerDescription"
+        app:layout_constraintEnd_toEndOf="@+id/editDangerDescription"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/editDangerDescription">
+
+        <RadioButton android:id="@+id/severityMinor"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/minor"
+            android:buttonTint="@color/colorSeverityMinor"
+            android:onClick="onActionButtonClicked"/>
+        <RadioButton android:id="@+id/severityMajor"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/major"
+            android:buttonTint="@color/colorSeverityMajor"
+            android:onClick="onActionButtonClicked"/>
+        <RadioButton android:id="@+id/severityCritical"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/critical"
+            android:buttonTint="@color/colorSeverityCritical"
+            android:onClick="onActionButtonClicked"/>
+        <RadioButton android:id="@+id/severityCatastrophic"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/catastrophic"
+            android:buttonTint="@color/colorSeverityCatastrophic"
+            android:onClick="onActionButtonClicked"/>
+
+    </RadioGroup>
 
     <Button
         android:layout_width="wrap_content"
@@ -47,6 +84,7 @@
         android:textColor="@color/colorPrimary"
         android:backgroundTint="@color/darkRed"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"/>

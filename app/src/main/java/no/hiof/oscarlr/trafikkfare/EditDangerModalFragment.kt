@@ -2,10 +2,12 @@ package no.hiof.oscarlr.trafikkfare
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RadioGroup
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_edit_danger.*
@@ -46,7 +48,10 @@ class EditDangerModalFragment : BottomSheetDialogFragment() {
     }
 
     interface EditDangerBottomSheetListener {
-        fun saveDangerButtonClicked(editedMarkerTitle: String, editedMarkerDescription: String)
+        fun saveDangerButtonClicked(
+            editedMarkerTitle: String,
+            editedMarkerDescription: String
+        )
     }
 
     override fun onAttach(context: Context) {

@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProviders
@@ -268,6 +269,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         val args = Bundle()
         args.putString("argTitle", marker.title)
         args.putString("argDescription", marker.snippet)
+        args.putString("argSeverityLevel", 1.toString())
         editDangerModal.arguments = args
         editDangerModal.show(supportFragmentManager, "editDangerModal")
     }
@@ -354,6 +356,27 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             }
         }
     }
+
+    fun onActionButtonClicked(view: View) {
+        if (view is RadioButton) {
+            val checked = view.isChecked
+            when (view.id) {
+                R.id.severityMinor ->
+                    if (checked)
+                        Log.d("Severity", "MINOR")
+                R.id.severityMajor ->
+                    if (checked)
+                        Log.d("Severity", "MAJOR")
+                R.id.severityCritical ->
+                    if (checked)
+                        Log.d("Severity", "CRITICAL")
+                R.id.severityCatastrophic ->
+                    if (checked)
+                        Log.d("Severity", "CATASTROPHIC")
+            }
+        }
+    }
+
 
 }
 

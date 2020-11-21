@@ -45,4 +45,8 @@
     <string name="fab">FAB</string>
     <string name="fab_add">FAB add</string>
     <string name="fab_delete">FAB delete</string>
+    <string name="minor">Minor</string>
+    <string name="major">Major</string>
+    <string name="critical">Critical</string>
+    <string name="catastrophic">Catastrophic</string>
 </resources>
