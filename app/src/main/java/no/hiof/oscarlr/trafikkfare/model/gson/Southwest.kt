@@ -1,4 +1,4 @@
-package no.hiof.oscarlr.trafikkfare.model.jsonModel
+package no.hiof.oscarlr.trafikkfare.model.gson
 
 data class Southwest(
     val lat: Double,

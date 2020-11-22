@@ -8,9 +8,10 @@ import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
+import no.hiof.oscarlr.trafikkfare.model.ClosestStatensVegvesen
 import no.hiof.oscarlr.trafikkfare.model.GasStation
 import no.hiof.oscarlr.trafikkfare.model.GasStation.Companion.gasStations
-import no.hiof.oscarlr.trafikkfare.model.jsonModel.StatensVegvesen
+import no.hiof.oscarlr.trafikkfare.model.gson.StatensVegvesen
 import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.IOException
@@ -48,7 +49,7 @@ class SplashScreenMapActivity : AppCompatActivity() {
 
             var resultString = ""
             try {
-                val url = URL("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=vegvesen&inputtype=textquery&fields=formatted_address,name&locationbias=circle:5000@59.12478,11.38754-122.2226413&key=AIzaSyAQVriOk4Bjy4dpNl9oR0w25WP60uphBi8")
+                val url = URL("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Statens%20Vegvesen&inputtype=textquery&fields=formatted_address,name,opening_hours,geometry&key=AIzaSyAQVriOk4Bjy4dpNl9oR0w25WP60uphBi8")
                 val httpUrlConnection = url.openConnection() as HttpURLConnection
 
                 httpUrlConnection.readTimeout = 8000
@@ -91,14 +92,16 @@ class SplashScreenMapActivity : AppCompatActivity() {
                 Log.e("Activity", "Network error")
             }
             else {
-                val gasStationData : StatensVegvesen = Gson().fromJson(result, StatensVegvesen::class.java)
-                val outputJson : String = Gson().toJson(gasStationData)
+                val statensVegvesenGson : StatensVegvesen = Gson().fromJson(result, StatensVegvesen::class.java)
 
-                // Create StatensVegvesen object here
+                val name = statensVegvesenGson.candidates[0].name
+                val address = statensVegvesenGson.candidates[0].formatted_address
+                val isOpen = statensVegvesenGson.candidates[0].opening_hours.open_now
+                val latitude = statensVegvesenGson.candidates[0].geometry.location.lat
+                val longitude = statensVegvesenGson.candidates[0].geometry.location.lng
 
-
-                Log.d("Gas Stations", gasStations.toString())
-                Log.d("Activity", outputJson)
+                val statensVegvesen = ClosestStatensVegvesen(name, address, isOpen, latitude, longitude)
+                ClosestStatensVegvesen.closestStatensVegvesen = statensVegvesen
 
                 splashScreenMapActivity.startMapActivity()
             }
