@@ -30,7 +30,7 @@ class SplashScreenMapActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             AsyncTaskWorker(this).execute()
-        }, 5000)
+        }, 2000)
 
     }
 

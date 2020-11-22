@@ -1,6 +1,6 @@
 package no.hiof.oscarlr.trafikkfare.model
 
-class GasStation(
+data class GasStation(
     var title: String,
     var vicinity: String,
     var rating: String,
