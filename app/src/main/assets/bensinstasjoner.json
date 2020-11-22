@@ -1,0 +1,128 @@
+[
+      {
+         "lat" : 59.13780699999999,
+         "lng" : 11.3799454,
+         "name" : "YX Brødløs",
+         "vicinity" : "Busterudkleiva 45, Halden",
+         "rating" : 4.1
+      },
+      {
+         "lat" : 59.1216,
+         "lng" : 11.3772272,
+         "name" : "Uno-X Høvleriet",
+         "vicinity" : "Walkers gate 10, Halden",
+         "rating" : 4.2
+      },
+      {
+         "lat" : 59.1249409,
+         "lng" : 11.4468518,
+         "name" : "Tangen bensinstasjon AS",
+         "vicinity" : "Aremarkveien 10, Tistedal",
+         "rating" : 3.9
+      },
+      {
+         "lat" : 59.11800159999999,
+         "lng" : 11.410353,
+         "name" : "RISUM",
+         "rating" : 3.9,
+         "vicinity" : "Iddeveien 33, Halden"
+      },
+      {
+         "lat" : 59.12473929999999,
+         "lng" : 11.3628364,
+         "name" : "Uno-X Rødsveien",
+         "rating" : 4.1,
+         "vicinity" : "Rødsveien 53, Halden"
+      },
+      {
+         "lat" : 59.1207395,
+         "lng" : 11.3904382,
+         "name" : "Circle K Halden",
+         "rating" : 3.8,
+         "vicinity" : "Kirkebakken 8-10, Halden"
+      },
+      {
+         "lat" : 59.13973249999999,
+         "lng" : 11.3801267,
+         "name" : "YX 7-Eleven Brødløs Rokkeveien",
+         "rating" : 3.6,
+         "vicinity" : "Rokkeveien 8, Halden"
+      },
+      {
+         "lat" : 59.12052259999999,
+         "lng" : 11.3074924,
+         "name" : "Circle K Automat Veng",
+         "rating" : 3.7,
+         "vicinity" : "Isebakkeveien 6, Berg i Østfold"
+      },
+      {
+         "lat" : 59.12193970000001,
+         "lng" : 11.3045225,
+         "name" : "Circle K Truck Halden",
+         "rating" : 3,
+         "vicinity" : "Svinesundveien 337, Berg"
+      },
+      {
+         "lat" : 59.12848749999998,
+         "lng" : 11.2731177,
+         "name" : "Shell Svinesund E6",
+         "rating" : 4,
+         "vicinity" : "Svinesundparken 2, Berg i Østfold"
+      },
+      {
+         "lat" : 59.1252957,
+         "lng" : 11.3906318,
+         "name" : "Shell Express Halden",
+         "rating" : 3.9,  
+         "vicinity" : "Garvergata 4, Halden"
+      },
+      {      
+         "lat" : 59.1206927,
+         "lng" : 11.3907309,
+         "name" : "Kirkebakken Auto senter Bjørn-Roger Hofgaard",
+         "rating" : 4.8,  
+         "vicinity" : "Kirkebakken 8, Halden"
+      },
+      {      
+         "lat" : 59.107873,
+         "lng" : 11.4184689,
+         "name" : "YX Øberg",
+         "rating" : 4.3,
+         "vicinity" : "Iddeveien 47, Halden"
+      },
+      {
+         "lat" : 59.112503,
+         "lng" : 11.2770313,
+         "name" : "Folmer Fuel",
+         "rating" : 4.6,
+         "vicinity" : "Riksveg 118, Berg i Østfold"
+      },
+      {
+         "lat" : 59.13127129999999,
+         "lng" : 11.2704706,
+         "name" : "Svinesundparken Transport Senter",
+         "rating" : 4.2,
+         "vicinity" : "Svinesundparken 1, Berg i Østfold"
+      },
+      {
+         "lat" : 59.1315574,
+         "lng" : 11.2705177,  
+         "name" : "YX Truck Svinesundparken",
+         "rating" : 4,
+         "vicinity" : "Svinesundparken, Berg i Østfold"
+      },
+      {
+         "lat" : 59.1314624, 
+         "lng" : 11.2702365,
+         "name" : "Shell",
+         "rating" : 4.4,  
+         "vicinity" : "Svinesundparken 10, i"
+      },
+      {
+         "lat" : 59.13048739999999,
+         "lng" : 11.2696898,
+         "name" : "ESSO Deli de Luca Svinesundparken",
+         "rating" : 4.4,
+         "vicinity" : "Svinesundparken 9, Halden"
+      }
+]

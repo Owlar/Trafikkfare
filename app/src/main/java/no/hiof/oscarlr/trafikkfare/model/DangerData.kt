@@ -7,8 +7,8 @@ data class DangerData(val uid : Int = 0,
                       var description : String = "",
                       var posterUrl : Int = 0,
                       var latitude : Double = 0.0,
-                      var longitude : Double = 0.0)
-{
+                      var longitude : Double = 0.0
+) {
 
     companion object {
        fun getTestDangers() : ArrayList<DangerData> {

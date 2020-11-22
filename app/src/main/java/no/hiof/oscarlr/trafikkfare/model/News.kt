@@ -5,7 +5,15 @@ import androidx.annotation.RequiresApi
 import no.hiof.oscarlr.trafikkfare.R
 import java.time.LocalDateTime
 
-data class News(val uid: Int, var road: String, var title: String, var county: String, var description: String, var startDate: LocalDateTime, var endDate: LocalDateTime, var dangerPosterUrl: Int? = null) {
+data class News(val uid: Int,
+                var road: String,
+                var title: String,
+                var county: String,
+                var description: String,
+                var startDate: LocalDateTime,
+                var endDate: LocalDateTime,
+                var dangerPosterUrl: Int? = null
+) {
 
     companion object {
         //To use LocalDateTime

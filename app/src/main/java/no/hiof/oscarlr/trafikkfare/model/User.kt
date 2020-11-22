@@ -2,7 +2,12 @@ package no.hiof.oscarlr.trafikkfare.model
 
 import android.net.Uri
 
-class User(val userId : Int, var firstName : String, var lastName : String, var age : Int, val location : Uri) {
+class User(val userId : Int,
+           var firstName : String,
+           var lastName : String,
+           var age : Int,
+           val location : Uri
+) {
 
     var fullName = "$firstName $lastName"
 
