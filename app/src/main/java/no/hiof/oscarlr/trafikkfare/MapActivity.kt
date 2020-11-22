@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
 import no.hiof.oscarlr.trafikkfare.helper.Firestore
 import no.hiof.oscarlr.trafikkfare.model.Danger
+import no.hiof.oscarlr.trafikkfare.model.GasStation
 import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortSnackbar
 import no.hiof.oscarlr.trafikkfare.util.shortToast
@@ -50,6 +51,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         //To have something to show upon adding marker to map
         private const val DEFAULT_MARKER_TITLE = "Fare"
         private const val DEFAULT_MARKER_DESCRIPTION = "Beskrivelse av fare"
+
+        private const val NO_DANGER = true
     }
 
     private var markerList = mutableListOf<Marker>()
@@ -169,11 +172,15 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
     private fun deleteMarker() {
         with(gMap) {
             setOnMarkerClickListener {
-                markerList.remove(it)
-                it.remove() //Remove marker from map
-                deleteFromFirestore(it)
-                setOnMarkerClickListener{ false }
-                true
+                if (it.tag == NO_DANGER)
+                    false
+                else {
+                    markerList.remove(it)
+                    it.remove() //Remove marker from map
+                    deleteFromFirestore(it)
+                    setOnMarkerClickListener{ false }
+                    true
+                }
             }
         }
     }
@@ -222,6 +229,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         with(gMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
 
+            retrieveGasStationsAndPlaceAsMarkers(gMap)
+
             val firestoreDb = FirebaseFirestore.getInstance()
             val dangersCollectionReference = firestoreDb.collection("dangers")
 
@@ -246,6 +255,18 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         handleBottomSheetSwitches(bottomSheet)
     }
 
+    private fun retrieveGasStationsAndPlaceAsMarkers(gMap: GoogleMap) {
+        GasStation.gasStations.forEach {
+            markerOptions = MarkerOptions()
+                .title(it.title)
+                .snippet(it.vicinity)
+                .position(LatLng(it.latitude, it.longitude))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+            marker = gMap.addMarker(markerOptions)
+            marker.tag = NO_DANGER
+        }
+    }
+
     private fun retrieveDangersAndPlaceAsMarkers(gMap: GoogleMap) {
         Danger.getDangers().forEach {
             markerOptions = MarkerOptions()
@@ -259,8 +280,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
     }
 
     private fun editSelectedMarker(markerToEdit: Marker) {
-        marker = markerToEdit
-        showEditDangerDialog()
+        if (markerToEdit.tag == NO_DANGER)
+            shortToast("Can't edit non-dangers")
+        else {
+            marker = markerToEdit
+            showEditDangerDialog()
+        }
     }
 
     private fun showEditDangerDialog() {
@@ -268,7 +293,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         val args = Bundle()
         args.putString("argTitle", marker.title)
         args.putString("argDescription", marker.snippet)
-        args.putString("argSeverityLevel", 1.toString())
         editDangerModal.arguments = args
         editDangerModal.show(supportFragmentManager, "editDangerModal")
     }
