@@ -230,8 +230,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         with(gMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
 
-            retrieveGasStationsAndPlaceAsMarkers(gMap)
-            retrieveStatensVegvesenAndMarkIt(gMap)
+            retrieveAndMarkGasStations(gMap)
+            retrieveAndMarkStatensVegvesen(gMap)
 
             val firestoreDb = FirebaseFirestore.getInstance()
             val dangersCollectionReference = firestoreDb.collection("dangers")
@@ -244,7 +244,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
                         dangerList.add(danger)
                     }
                     Danger.setFromFirestore(dangerList)
-                    retrieveDangersAndPlaceAsMarkers(gMap)
+                    retrieveAndMarkDangers(gMap)
                 }
             }
             setOnMarkerClickListener {
@@ -257,7 +257,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         handleBottomSheetSwitches(bottomSheet)
     }
 
-    private fun retrieveStatensVegvesenAndMarkIt(gMap: GoogleMap) {
+    private fun retrieveAndMarkStatensVegvesen(gMap: GoogleMap) {
         val obj = ClosestStatensVegvesen.closestStatensVegvesen
         markerOptions = MarkerOptions()
             .title("${obj.name} ${isOpenNow(obj)}")
@@ -272,7 +272,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         return if (obj.isOpen) "is OPEN" else "is CLOSED"
     }
 
-    private fun retrieveGasStationsAndPlaceAsMarkers(gMap: GoogleMap) {
+    private fun retrieveAndMarkGasStations(gMap: GoogleMap) {
         GasStation.gasStations.forEach {
             markerOptions = MarkerOptions()
                 .title(it.title)
@@ -284,7 +284,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         }
     }
 
-    private fun retrieveDangersAndPlaceAsMarkers(gMap: GoogleMap) {
+    private fun retrieveAndMarkDangers(gMap: GoogleMap) {
         Danger.getDangers().forEach {
             markerOptions = MarkerOptions()
                 .title(it.title)
