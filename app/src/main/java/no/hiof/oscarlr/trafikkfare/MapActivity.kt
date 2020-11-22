@@ -33,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
 import no.hiof.oscarlr.trafikkfare.helper.Firestore
+import no.hiof.oscarlr.trafikkfare.model.ClosestStatensVegvesen
 import no.hiof.oscarlr.trafikkfare.model.Danger
 import no.hiof.oscarlr.trafikkfare.model.GasStation
 import no.hiof.oscarlr.trafikkfare.util.longToast
@@ -230,6 +231,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             moveCamera(CameraUpdateFactory.newLatLngZoom(HALDEN_POSITION, ZOOM_LEVEL_13))
 
             retrieveGasStationsAndPlaceAsMarkers(gMap)
+            retrieveStatensVegvesenAndMarkIt(gMap)
 
             val firestoreDb = FirebaseFirestore.getInstance()
             val dangersCollectionReference = firestoreDb.collection("dangers")
@@ -253,6 +255,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         }
         val bottomSheet = findViewById<View>(R.id.map_bottomSheet)
         handleBottomSheetSwitches(bottomSheet)
+    }
+
+    private fun retrieveStatensVegvesenAndMarkIt(gMap: GoogleMap) {
+        val obj = ClosestStatensVegvesen.closestStatensVegvesen
+        markerOptions = MarkerOptions()
+            .title("${obj.name} ${isOpenNow(obj)}")
+            .snippet(obj.address)
+            .position(LatLng(obj.latitude, obj.longitude))
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+        marker = gMap.addMarker(markerOptions)
+        marker.tag = NO_DANGER
+    }
+
+    private fun isOpenNow(obj: ClosestStatensVegvesen): String {
+        return if (obj.isOpen) "is OPEN" else "is CLOSED"
     }
 
     private fun retrieveGasStationsAndPlaceAsMarkers(gMap: GoogleMap) {
