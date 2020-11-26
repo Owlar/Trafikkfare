@@ -35,79 +35,11 @@ class SplashScreenMapActivity : AppCompatActivity() {
 
     }
 
-    fun startMapActivity() {
+    private fun startMapActivity() {
         startActivity(Intent(this, MapActivity::class.java))
         finish()
     }
 
-    @SuppressLint("StaticFieldLeak")
-    private inner class AsyncTaskWorker(private val splashScreenMapActivity: SplashScreenMapActivity) : AsyncTask<Void, String, String>() {
-
-        override fun doInBackground(vararg voids: Void?): String {
-
-            createGasStationsFromJsonFile()
-
-            var resultString = ""
-            try {
-                val url = URL("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Statens%20Vegvesen&inputtype=textquery&fields=formatted_address,name,opening_hours,geometry&key=AIzaSyAQVriOk4Bjy4dpNl9oR0w25WP60uphBi8")
-                val httpUrlConnection = url.openConnection() as HttpURLConnection
-
-                httpUrlConnection.readTimeout = 8000
-                httpUrlConnection.connectTimeout = 8000
-                httpUrlConnection.doOutput = true
-                httpUrlConnection.connect()
-
-                val responseCode: Int = httpUrlConnection.responseCode
-                Log.d("Activity", "Response is $responseCode")
-
-                if (responseCode == 200) {
-                    val inputStream: InputStream = httpUrlConnection.inputStream
-                    val isReader = InputStreamReader(inputStream)
-                    val bufferedReader = BufferedReader(isReader)
-
-                    var temporaryString: String?
-
-                    try {
-                        while (true) {
-                            temporaryString = bufferedReader.readLine()
-                            if (temporaryString == null)
-                                break
-                            resultString += temporaryString
-                        }
-                    } catch (e: Exception) {
-                        Log.e("Activity", "Error: ${e.printStackTrace()}")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("", "Error in doInBackground: ${e.message}")
-            }
-
-            return resultString
-        }
-
-        override fun onPostExecute(result: String?) {
-            result ?: return
-
-            if (result == "") {
-                Log.e("Activity", "Network error")
-            }
-            else {
-                val statensVegvesenGson : StatensVegvesen = Gson().fromJson(result, StatensVegvesen::class.java)
-
-                val name = statensVegvesenGson.candidates[0].name
-                val address = statensVegvesenGson.candidates[0].formatted_address
-                val isOpen = statensVegvesenGson.candidates[0].opening_hours.open_now
-                val latitude = statensVegvesenGson.candidates[0].geometry.location.lat
-                val longitude = statensVegvesenGson.candidates[0].geometry.location.lng
-
-                val statensVegvesen = ClosestStatensVegvesen(name, address, isOpen, latitude, longitude)
-                ClosestStatensVegvesen.closestStatensVegvesen = statensVegvesen
-
-                splashScreenMapActivity.startMapActivity()
-            }
-        }
-
-    }
     private fun createGasStationsFromJsonFile() {
         val json : String?
         try {
@@ -131,6 +63,71 @@ class SplashScreenMapActivity : AppCompatActivity() {
         } catch (ioe : IOException) {
             ioe.printStackTrace()
         }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private inner class AsyncTaskWorker(private val splashScreenMapActivity: SplashScreenMapActivity) : AsyncTask<Void, String, String>() {
+
+        override fun doInBackground(vararg voids: Void?): String {
+
+            createGasStationsFromJsonFile()
+
+            val stringBuilder = StringBuilder()
+
+            try {
+                val url = URL("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Statens%20Vegvesen&inputtype=textquery&fields=formatted_address,name,opening_hours,geometry&key=AIzaSyAQVriOk4Bjy4dpNl9oR0w25WP60uphBi8")
+                val httpUrlConnection = url.openConnection() as HttpURLConnection
+
+                httpUrlConnection.doOutput = true
+                httpUrlConnection.connect()
+
+                val responseCode: Int = httpUrlConnection.responseCode
+                Log.d("Activity", "Response is $responseCode")
+
+                if (responseCode == 200) {
+                    val inputStream: InputStream = httpUrlConnection.inputStream
+                    val bufferedReader = BufferedReader(InputStreamReader(inputStream))
+
+                    var temporaryString: String?
+
+                    try {
+                        while (true) {
+                            temporaryString = bufferedReader.readLine()
+                            if (temporaryString == null)
+                                break
+
+                            stringBuilder.append(temporaryString)
+                        }
+                    } catch (e: Exception) {
+                        Log.e("Activity", "Error: ${e.printStackTrace()}")
+                    }
+                }
+                httpUrlConnection.disconnect()
+            } catch (e: Exception) {
+                Log.e("", "Error in doInBackground: ${e.message}")
+            }
+
+            return stringBuilder.toString()
+        }
+
+        override fun onPostExecute(result: String?) {
+            if (result.toString().isNotEmpty()) {
+                val statensVegvesenGson : StatensVegvesen = Gson().fromJson(result, StatensVegvesen::class.java)
+
+                val name = statensVegvesenGson.candidates[0].name
+                val address = statensVegvesenGson.candidates[0].formatted_address
+                val isOpen = statensVegvesenGson.candidates[0].opening_hours.open_now
+                val latitude = statensVegvesenGson.candidates[0].geometry.location.lat
+                val longitude = statensVegvesenGson.candidates[0].geometry.location.lng
+
+                val statensVegvesen = ClosestStatensVegvesen(name, address, isOpen, latitude, longitude)
+                ClosestStatensVegvesen.closestStatensVegvesen = statensVegvesen
+
+                splashScreenMapActivity.startMapActivity()
+            }
+        }
+
+
     }
 
 }
