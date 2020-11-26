@@ -12,6 +12,8 @@ import no.hiof.oscarlr.trafikkfare.model.ClosestStatensVegvesen
 import no.hiof.oscarlr.trafikkfare.model.GasStation
 import no.hiof.oscarlr.trafikkfare.model.GasStation.Companion.gasStations
 import no.hiof.oscarlr.trafikkfare.model.gson.StatensVegvesen
+import no.hiof.oscarlr.trafikkfare.util.longToast
+import no.hiof.oscarlr.trafikkfare.util.shortToast
 import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.IOException
@@ -65,6 +67,11 @@ class SplashScreenMapActivity : AppCompatActivity() {
         }
     }
 
+    private fun proceedAfterInternetWarning() {
+        longToast("Kartets funksjonalitet begrenses grunnet manglende internett tilgang")
+        startMapActivity()
+    }
+
     @SuppressLint("StaticFieldLeak")
     private inner class AsyncTaskWorker(private val splashScreenMapActivity: SplashScreenMapActivity) : AsyncTask<Void, String, String>() {
 
@@ -111,7 +118,11 @@ class SplashScreenMapActivity : AppCompatActivity() {
         }
 
         override fun onPostExecute(result: String?) {
-            if (result.toString().isNotEmpty()) {
+
+            if (result == "") {
+                runOnUiThread { proceedAfterInternetWarning() }
+
+            } else {
                 val statensVegvesenGson : StatensVegvesen = Gson().fromJson(result, StatensVegvesen::class.java)
 
                 val name = statensVegvesenGson.candidates[0].name
