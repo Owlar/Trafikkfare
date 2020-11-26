@@ -321,7 +321,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             saveMarkerToList()
             addToFirestore()
         } else
-            longToast("Du må være tilkoblet internett for å lagre en fare")
+            longToast("You must be connected to internet to save a danger")
     }
 
     private fun isConnectedToInternet(): Boolean {

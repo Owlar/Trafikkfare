@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.danger_list_item.dangerTitleTextView
 import kotlinx.android.synthetic.main.fragment_danger_detail.*
 import no.hiof.oscarlr.trafikkfare.model.DangerData
 
-/* Source: https://github.com/larseknu/mobilprogrammering2019/tree/master/Lecture05_RecyclerView/AfterLecture_Kotlin */
 class DangerDetailFragment : Fragment() {
 
     companion object {

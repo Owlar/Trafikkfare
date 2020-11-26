@@ -68,7 +68,7 @@ class SplashScreenMapActivity : AppCompatActivity() {
     }
 
     private fun proceedAfterInternetWarning() {
-        longToast("Kartets funksjonalitet begrenses grunnet manglende internett tilgang")
+        longToast("Permission to access internet denied. Map has limited functionality.")
         startMapActivity()
     }
 
