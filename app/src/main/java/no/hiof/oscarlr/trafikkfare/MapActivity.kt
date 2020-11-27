@@ -3,9 +3,14 @@
 package no.hiof.oscarlr.trafikkfare
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,6 +19,8 @@ import android.view.animation.AnimationUtils
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -55,6 +62,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         private const val NO_DANGER = true
 
         private const val PERMISSION_LOCATION_ID = 11
+        private const val CHANNEL_ID = "Channel_21"
+        private const val NOTIFICATION_ID = 21
     }
 
     private var markerList = mutableListOf<Marker>()
@@ -94,6 +103,31 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         }
 
         Firestore.getAllDangers()
+        createNotificationChannel()
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(CHANNEL_ID, "Danger", NotificationManager.IMPORTANCE_HIGH).apply {
+                description = "Dangers on map"
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun dangerNotification() {
+        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+            .setContentTitle("New Danger: ${marker.title}")
+            .setContentText(marker.snippet)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true) //Clear notification after clicking it
+
+        with(NotificationManagerCompat.from(this)) {
+            notify(NOTIFICATION_ID, notificationBuilder.build())
+        }
+
     }
 
     private fun handleBottomSheetSwitches(bottomSheet: View?) {
@@ -321,6 +355,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             marker.snippet = editedMarkerDescription
             saveMarkerToList()
             addToFirestore()
+            dangerNotification()
         } else
             longToast("You must be connected to internet to save a danger")
     }
