@@ -1,5 +1,6 @@
 package no.hiof.oscarlr.trafikkfare
 
+
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
@@ -13,14 +14,11 @@ import no.hiof.oscarlr.trafikkfare.model.GasStation
 import no.hiof.oscarlr.trafikkfare.model.GasStation.Companion.gasStations
 import no.hiof.oscarlr.trafikkfare.model.gson.StatensVegvesen
 import no.hiof.oscarlr.trafikkfare.util.longToast
-import no.hiof.oscarlr.trafikkfare.util.shortToast
 import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
-
-
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -33,7 +31,7 @@ class SplashScreenMapActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             AsyncTaskWorker(this).execute()
-        }, 2000)
+        }, 3000)
 
     }
 

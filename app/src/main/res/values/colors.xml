@@ -9,4 +9,6 @@
     <color name="colorSeverityMajor">#F2C94E</color>
     <color name="colorSeverityCritical">#F78145</color>
     <color name="colorSeverityCatastrophic">#F24E4E</color>
+
+    <color name="darkBlue">#002366</color>
 </resources>

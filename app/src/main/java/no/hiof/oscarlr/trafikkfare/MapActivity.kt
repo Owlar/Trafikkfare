@@ -4,12 +4,9 @@ package no.hiof.oscarlr.trafikkfare
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.ConnectivityManager
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
@@ -39,6 +36,8 @@ import no.hiof.oscarlr.trafikkfare.model.GasStation
 import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortSnackbar
 import no.hiof.oscarlr.trafikkfare.util.shortToast
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 
 @Suppress("DEPRECATION")
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFragment.EditDangerBottomSheetListener {
@@ -54,6 +53,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         private const val DEFAULT_MARKER_DESCRIPTION = "Beskrivelse av fare"
 
         private const val NO_DANGER = true
+
+        private const val PERMISSION_LOCATION_ID = 11
     }
 
     private var markerList = mutableListOf<Marker>()
@@ -365,6 +366,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         gMap.clear()
     }
 
+    @AfterPermissionGranted(PERMISSION_LOCATION_ID)
     private fun getUserPosition() {
         if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) {
             client.lastLocation.addOnSuccessListener { location ->
@@ -380,22 +382,26 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
                 }
             }
         }
-        else
-            ActivityCompat.requestPermissions(this, arrayOf(ACCESS_FINE_LOCATION), 11)
+        else {
+            EasyPermissions.requestPermissions(
+                this,
+                "In order to show your location, we need permission to access your location",
+                PERMISSION_LOCATION_ID,
+                ACCESS_FINE_LOCATION
+            )
+        }
+
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (requestCode == 11) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PERMISSION_GRANTED)
-                getUserPosition()
-            else {
-                longToast("Permission to access location denied. Please edit permissions.")
-                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", packageName, null)
-                })
-            }
-        }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
+
 
     fun onActionButtonClicked(view: View) {
         if (view is RadioButton) {
