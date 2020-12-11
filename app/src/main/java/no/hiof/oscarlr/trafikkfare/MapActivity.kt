@@ -7,11 +7,9 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -121,7 +119,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
     private fun dangerNotification(severityLevel: String) {
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-            .setContentTitle("New $severityLevel Danger : ${marker.title}")
+            .setContentTitle("New $severityLevel Danger: ${marker.title}")
             .setContentText(marker.snippet)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setColor(resources.getColor(setSeverityLevelColor(severityLevel)))
@@ -139,7 +137,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             SeverityLevel.CRITICAL.toString() -> return R.color.colorSeverityCritical
             SeverityLevel.CATASTROPHIC.toString() -> return R.color.colorSeverityCatastrophic
         }
-        return R.color.colorPrimary
+        return R.color.colorPrimaryDark
     }
 
     private fun handleBottomSheetSwitches(bottomSheet: View?) {
@@ -353,8 +351,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             marker.snippet = editedMarkerDescription
             saveMarkerToList()
             addToFirestore()
-            if (severityLevel.isNotEmpty())
-                dangerNotification(severityLevel)
+            dangerNotification(severityLevel)
         } else
             longToast("You must be connected to internet to save a danger")
     }
@@ -435,7 +432,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
-
 
     fun onActionButtonClicked(view: View) {
         if (view is RadioButton) {

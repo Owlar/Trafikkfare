@@ -13,11 +13,8 @@ class SplashScreenMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen_main)
 
         Handler().postDelayed({
-
             doWork()
-
         }, 500)
-
     }
 
     private fun doWork() {

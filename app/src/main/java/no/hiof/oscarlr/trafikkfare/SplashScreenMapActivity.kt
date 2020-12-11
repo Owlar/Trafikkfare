@@ -1,6 +1,5 @@
 package no.hiof.oscarlr.trafikkfare
 
-
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
@@ -135,7 +134,6 @@ class SplashScreenMapActivity : AppCompatActivity() {
                 splashScreenMapActivity.startMapActivity()
             }
         }
-
 
     }
 
