@@ -7,6 +7,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -122,12 +123,23 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             .setContentTitle("New $severityLevel Danger : ${marker.title}")
             .setContentText(marker.snippet)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setColor(resources.getColor(setSeverityLevelColor(severityLevel)))
             .setAutoCancel(true) //Clear notification after clicking it
 
         with(NotificationManagerCompat.from(this)) {
             notify(NOTIFICATION_ID, notificationBuilder.build())
         }
 
+    }
+
+    private fun setSeverityLevelColor(severityLevel: String): Int {
+        when(severityLevel) {
+            SeverityLevel.MINOR.toString() -> return R.color.colorSeverityMinor
+            SeverityLevel.MAJOR.toString() -> return R.color.colorSeverityMajor
+            SeverityLevel.CRITICAL.toString() -> return R.color.colorSeverityCritical
+            SeverityLevel.CATASTROPHIC.toString() -> return R.color.colorSeverityCatastrophic
+        }
+        return R.color.colorPrimary
     }
 
     private fun handleBottomSheetSwitches(bottomSheet: View?) {
