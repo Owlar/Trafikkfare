@@ -1,11 +1,9 @@
-package no.hiof.oscarlr.trafikkfare.splash
+package no.hiof.oscarlr.trafikkfare
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import no.hiof.oscarlr.trafikkfare.MainActivity
-import no.hiof.oscarlr.trafikkfare.R
 
 @Suppress("DEPRECATION")
 class SplashScreenMainActivity : AppCompatActivity() {

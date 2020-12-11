@@ -1,4 +1,4 @@
-package no.hiof.oscarlr.trafikkfare.fragment
+package no.hiof.oscarlr.trafikkfare
 
 import android.content.Context
 import android.os.Bundle
@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_edit_danger.*
 import kotlinx.android.synthetic.main.fragment_edit_danger.view.*
-import no.hiof.oscarlr.trafikkfare.R
 
 class EditDangerModalFragment : BottomSheetDialogFragment() {
 

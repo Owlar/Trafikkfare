@@ -1,4 +1,4 @@
-package no.hiof.oscarlr.trafikkfare.fragment
+package no.hiof.oscarlr.trafikkfare
 
 import android.os.Build
 import android.os.Bundle
@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import no.hiof.oscarlr.trafikkfare.HomeFragmentArgs.Companion.fromBundle
-import no.hiof.oscarlr.trafikkfare.IMainActivity
-import no.hiof.oscarlr.trafikkfare.R
 import no.hiof.oscarlr.trafikkfare.adapter.NewsAdapter
 import no.hiof.oscarlr.trafikkfare.model.News
 

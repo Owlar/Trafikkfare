@@ -12,8 +12,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import no.hiof.oscarlr.trafikkfare.fragment.HomeFragment
-import no.hiof.oscarlr.trafikkfare.splash.SplashScreenMapActivity
 import no.hiof.oscarlr.trafikkfare.util.shortToast
 
 

@@ -1,4 +1,4 @@
-package no.hiof.oscarlr.trafikkfare.fragment
+package no.hiof.oscarlr.trafikkfare
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_danger_list.*
-import no.hiof.oscarlr.trafikkfare.DangerListFragmentDirections
-import no.hiof.oscarlr.trafikkfare.IMainActivity
-import no.hiof.oscarlr.trafikkfare.R
 import no.hiof.oscarlr.trafikkfare.adapter.DangerAdapter
 import no.hiof.oscarlr.trafikkfare.model.DangerData
 
