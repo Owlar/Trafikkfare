@@ -5,9 +5,7 @@ package no.hiof.oscarlr.trafikkfare
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.ConnectivityManager
 import android.os.Build
@@ -36,7 +34,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
-import no.hiof.oscarlr.trafikkfare.helper.Firestore
+import no.hiof.oscarlr.trafikkfare.db.Firestore
+import no.hiof.oscarlr.trafikkfare.fragment.EditDangerModalFragment
 import no.hiof.oscarlr.trafikkfare.model.ClosestStatensVegvesen
 import no.hiof.oscarlr.trafikkfare.model.Danger
 import no.hiof.oscarlr.trafikkfare.model.GasStation
@@ -55,7 +54,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         private const val MY_POSITION_TITLE = "Min posisjon"
         private const val MY_POSITION_DESCRIPTION = "Her befinner jeg meg"
 
-        //To have something to show upon adding marker to map
         private const val DEFAULT_MARKER_TITLE = "Fare"
         private const val DEFAULT_MARKER_DESCRIPTION = "Beskrivelse av fare"
 
@@ -220,20 +218,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             }
         }
     }
-
-    //START REGION: FOR TESTING PURPOSES
-    private fun testSeeMarkers() {
-        markerList.forEach {
-            Log.d("MapActivity", "${it.id} - ${it.title} - ${it.snippet}")
-        }
-    }
-
-    private fun testSeeDangers() {
-        Danger.getDangers().forEach {
-            Log.d("TAG", it.toString())
-        }
-    }
-    //END REGION: FOR TESTING PURPOSES
 
     private fun fabMapButtonAddClicked(fabClose: Animation, fabRotateClockwise: Animation) {
         fabMap_delete.startAnimation(fabClose)

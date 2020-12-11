@@ -1,4 +1,4 @@
-package no.hiof.oscarlr.trafikkfare.helper
+package no.hiof.oscarlr.trafikkfare.db
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore

@@ -1,4 +1,4 @@
-package no.hiof.oscarlr.trafikkfare
+package no.hiof.oscarlr.trafikkfare.splash
 
 
 import android.annotation.SuppressLint
@@ -9,6 +9,8 @@ import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
+import no.hiof.oscarlr.trafikkfare.MapActivity
+import no.hiof.oscarlr.trafikkfare.R
 import no.hiof.oscarlr.trafikkfare.model.ClosestStatensVegvesen
 import no.hiof.oscarlr.trafikkfare.model.GasStation
 import no.hiof.oscarlr.trafikkfare.model.GasStation.Companion.gasStations

@@ -1,4 +1,4 @@
-package no.hiof.oscarlr.trafikkfare
+package no.hiof.oscarlr.trafikkfare.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_login.*
+import no.hiof.oscarlr.trafikkfare.IMainActivity
+import no.hiof.oscarlr.trafikkfare.LoginFragmentDirections
+import no.hiof.oscarlr.trafikkfare.R
 
 
 class LoginFragment : Fragment() {
