@@ -104,6 +104,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         }
 
         Firestore.getAllDangers()
+        severityLevel = String()
         createNotificationChannel()
     }
 
@@ -124,7 +125,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             .setContentText(marker.snippet)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setColor(resources.getColor(setSeverityLevelColor(severityLevel)))
-            .setAutoCancel(true) //Clear notification after clicking it
 
         with(NotificationManagerCompat.from(this)) {
             notify(NOTIFICATION_ID, notificationBuilder.build())
@@ -232,20 +232,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             }
         }
     }
-
-    //START REGION: FOR TESTING PURPOSES
-    private fun testSeeMarkers() {
-        markerList.forEach {
-            Log.d("MapActivity", "${it.id} - ${it.title} - ${it.snippet}")
-        }
-    }
-
-    private fun testSeeDangers() {
-        Danger.getDangers().forEach {
-            Log.d("TAG", it.toString())
-        }
-    }
-    //END REGION: FOR TESTING PURPOSES
 
     private fun fabMapButtonAddClicked(fabClose: Animation, fabRotateClockwise: Animation) {
         fabMap_delete.startAnimation(fabClose)
