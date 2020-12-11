@@ -5,9 +5,7 @@ package no.hiof.oscarlr.trafikkfare
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.ConnectivityManager
 import android.os.Build
@@ -36,7 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_map_bottom_sheet.*
-import no.hiof.oscarlr.trafikkfare.helper.Firestore
+import no.hiof.oscarlr.trafikkfare.db.Firestore
 import no.hiof.oscarlr.trafikkfare.model.ClosestStatensVegvesen
 import no.hiof.oscarlr.trafikkfare.model.Danger
 import no.hiof.oscarlr.trafikkfare.model.GasStation
