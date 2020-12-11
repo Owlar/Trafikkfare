@@ -38,6 +38,7 @@ import no.hiof.oscarlr.trafikkfare.db.Firestore
 import no.hiof.oscarlr.trafikkfare.model.ClosestStatensVegvesen
 import no.hiof.oscarlr.trafikkfare.model.Danger
 import no.hiof.oscarlr.trafikkfare.model.GasStation
+import no.hiof.oscarlr.trafikkfare.util.SeverityLevel
 import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortSnackbar
 import no.hiof.oscarlr.trafikkfare.util.shortToast
@@ -75,6 +76,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
     private lateinit var mapView : View
     private lateinit var gMap : GoogleMap
     private lateinit var danger : Danger
+    private lateinit var severityLevel : String
 
     private val fabOpen : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.fab_open) }
     private val fabClose : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.fab_close) }
@@ -114,10 +116,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         }
     }
 
-    private fun dangerNotification() {
+    private fun dangerNotification(severityLevel: String) {
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-            .setContentTitle("New Danger: ${marker.title}")
+            .setContentTitle("New $severityLevel Danger : ${marker.title}")
             .setContentText(marker.snippet)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true) //Clear notification after clicking it
@@ -353,7 +355,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             marker.snippet = editedMarkerDescription
             saveMarkerToList()
             addToFirestore()
-            dangerNotification()
+            if (severityLevel.isNotEmpty())
+                dangerNotification(severityLevel)
         } else
             longToast("You must be connected to internet to save a danger")
     }
@@ -442,16 +445,16 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             when (view.id) {
                 R.id.severityMinor ->
                     if (checked)
-                        Log.d("Severity", "MINOR")
+                        severityLevel = SeverityLevel.MINOR.toString()
                 R.id.severityMajor ->
                     if (checked)
-                        Log.d("Severity", "MAJOR")
+                        severityLevel = SeverityLevel.MAJOR.toString()
                 R.id.severityCritical ->
                     if (checked)
-                        Log.d("Severity", "CRITICAL")
+                        severityLevel = SeverityLevel.CRITICAL.toString()
                 R.id.severityCatastrophic ->
                     if (checked)
-                        Log.d("Severity", "CATASTROPHIC")
+                        severityLevel = SeverityLevel.CATASTROPHIC.toString()
             }
         }
     }
