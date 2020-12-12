@@ -1,6 +1,7 @@
 package no.hiof.oscarlr.trafikkfare
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,9 @@ class EditDangerModalFragment : BottomSheetDialogFragment() {
         val trafficSign = view.findViewById<ImageButton>(R.id.editDangerTrafficSign)
         trafficSign.setImageResource(R.drawable.danger)
 
+        //Due to the fact that one can not get the ImageButton's image resource id as Int
+        trafficSign.tag = R.drawable.danger
+
         if (arguments != null) {
             val title = arguments?.getString("argTitle")
             val description = arguments?.getString("argDescription")
@@ -40,7 +44,8 @@ class EditDangerModalFragment : BottomSheetDialogFragment() {
                     editDangerTitle.text.toString(),
                     editDangerDescription.text.toString(),
                     editDangerRoad.text.toString(),
-                    editDangerCounty.text.toString()
+                    editDangerCounty.text.toString(),
+                    trafficSign.tag as Int
                 )
                 dismiss()
             }
@@ -56,6 +61,7 @@ class EditDangerModalFragment : BottomSheetDialogFragment() {
             description: String,
             road: String,
             county: String,
+            image: Int,
         )
     }
 
