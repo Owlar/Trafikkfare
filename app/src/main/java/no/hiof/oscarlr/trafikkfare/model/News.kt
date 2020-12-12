@@ -27,13 +27,13 @@ data class News(var title: String,
                 R.drawable.rasfare
             )
 
-            val mooseNews = News("E6", "Død elg", "Hedmark", "Lastebilsjåfør kolliderte med elg, vei blokkert.",
+            val mooseNews = News("Død elg", "Lastebilsjåfør kolliderte med elg, vei blokkert.", "E6", "Hedmark",
                 LocalDateTime.now())
-            val windNews = News("E10", "Storm", "Nordland", "Det blåser noe voldsomt, ikke gå ut av bilen.",
+            val windNews = News("Storm", "Det blåser noe voldsomt, ikke gå ut av bilen.", "E10", "Nordland",
                 LocalDateTime.now())
-            val skiNews = News("E45", "Ski festival", "Finnmark", "Ski festival i Finnmark, kjør forsiktig og vær obs på skiløpere.",
+            val skiNews = News("Ski festival", "Ski festival i Finnmark, kjør forsiktig og vær obs på skiløpere.", "E45", "Finnmark",
                 LocalDateTime.now())
-            val landslideNews = News("E39", "Bilberging", "Sogn og Fjordane", "Bilberging etter ras. Vær forsiktig, det er fortsatt rasfare i nærheten av ulykken.",
+            val landslideNews = News("Bilberging", "Bilberging etter ras. Vær forsiktig, det er fortsatt rasfare i nærheten av ulykken.", "E39", "Sogn og Fjordane",
                 LocalDateTime.now())
 
             newsData.add(mooseNews)
