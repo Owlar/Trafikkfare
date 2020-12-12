@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_home_news_list_item.view.*
 import no.hiof.oscarlr.trafikkfare.R
 import no.hiof.oscarlr.trafikkfare.model.News
@@ -28,16 +29,21 @@ class NewsAdapter(private val items : ArrayList<News>) : RecyclerView.Adapter<Ne
         private val newsCountyTextView = view.news_item_county
         private val newsDescriptionTextView = view.news_item_description
         private val newsStartDateTextView = view.news_item_startDate
-        //private val newsEndDateTextView = view.news_item_endDate
 
         fun bind(item: News) {
-            item.dangerPosterUrl?.let { newsPosterImageView.setImageResource(it) }
+
+            Glide.with(itemView)
+                .load(item.dangerPosterUrl)
+                .placeholder(R.drawable.danger)
+                .error(R.drawable.danger)
+                .fallback(R.drawable.danger)
+                .into(newsPosterImageView)
+
             newsRoadTextView.text = item.road
             newsTitleTextView.text = item.title
             newsCountyTextView.text = item.county
             newsDescriptionTextView.text = item.description
-            newsStartDateTextView.text = item.startDate.toString()
-            //newsEndDateTextView.text = "To now"
+            newsStartDateTextView.text = item.startDate
         }
     }
 
