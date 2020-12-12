@@ -5,16 +5,26 @@ import androidx.annotation.RequiresApi
 import no.hiof.oscarlr.trafikkfare.R
 import java.time.LocalDateTime
 
-data class News(var title: String,
-                var description: String,
-                var road: String,
-                var county: String,
-                var startDate: LocalDateTime,
+data class News(var title: String = "",
+                var description: String = "",
+                var road: String = "",
+                var county: String = "",
+                var startDate: String = "",
                 var dangerPosterUrl: Int? = null
 ) {
 
     companion object {
-        //To use LocalDateTime
+        private var news = ArrayList<News>()
+
+        fun setFromFirestore(newsFromFirestore: ArrayList<News>) {
+            news = newsFromFirestore
+        }
+
+        fun getNews() : ArrayList<News> {
+            return news
+        }
+
+        /*
         @RequiresApi(Build.VERSION_CODES.O)
         fun getNews() : ArrayList<News> {
 
@@ -46,5 +56,6 @@ data class News(var title: String,
             }
             return newsData
         }
+        */
     }
 }

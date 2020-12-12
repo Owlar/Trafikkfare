@@ -48,6 +48,19 @@ class Firestore {
                 .addOnFailureListener { e -> Log.w("TAG", "Error writing document", e) }
         }
 
+        fun getTheNews() {
+            val firestoreDb = FirebaseFirestore.getInstance()
+            val docRef = firestoreDb.collection("news")
+            val newsList = ArrayList<News>()
+            docRef.get().addOnSuccessListener {
+                it.forEach { document ->
+                    val news : News = document.toObject(News::class.java)
+                    newsList.add(news)
+                }
+                News.setFromFirestore(newsList)
+            }
+        }
+
 
     }
 }
