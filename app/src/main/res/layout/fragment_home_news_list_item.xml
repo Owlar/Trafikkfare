@@ -74,7 +74,7 @@
             android:id="@+id/news_item_startDate"
             android:layout_toEndOf="@id/news_item_road"
             android:layout_below="@id/news_item_description"
-            android:text="@string/news_list_item_title"
+            android:text="@string/start_date_no"
             android:textColor="@android:color/black"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="2dp" />
@@ -85,7 +85,7 @@
             android:id="@+id/news_item_endDate"
             android:layout_toEndOf="@id/news_item_road"
             android:layout_below="@+id/news_item_startDate"
-            android:text="@string/news_list_item_title"
+            android:text="@string/present_date_no"
             android:textColor="@android:color/black"
             android:layout_marginStart="10dp" />
 

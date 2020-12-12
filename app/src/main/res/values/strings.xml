@@ -13,7 +13,6 @@
     <string name="danger_poster">DangerPoster</string>
     <string name="danger">Fare</string>
     <string name="submit">Submit</string>
-    <string name="red">#EA4335</string>
     <string name="home_no">Hjem</string>
     <string name="dangers_no">Farer</string>
     <string name="location_no">Sted</string>
@@ -51,4 +50,6 @@
     <string name="catastrophic">Catastrophic</string>
     <string name="road_no">Vei</string>
     <string name="county_no">Fylke</string>
+    <string name="start_date_no">Startdato</string>
+    <string name="present_date_no">Nåværende Dato</string>
 </resources>
