@@ -49,4 +49,6 @@
     <string name="major">Major</string>
     <string name="critical">Critical</string>
     <string name="catastrophic">Catastrophic</string>
+    <string name="road_no">Vei</string>
+    <string name="county_no">Fylke</string>
 </resources>
