@@ -353,8 +353,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         title: String,
         description: String,
         road: String,
-        county: String,
-        image: Int
+        county: String
     ) {
         if (isConnectedToInternet()) {
             marker.title = title
@@ -363,7 +362,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             addToFirestore()
             dangerNotification(severityLevel)
 
-            val news = News(title, description, road, county, LocalDateTime.now().toString(), image)
+            val news = News(title, description, road, county, LocalDateTime.now().toString())
             Firestore.setNews(news)
         } else
             longToast("You must be connected to internet to save a danger")

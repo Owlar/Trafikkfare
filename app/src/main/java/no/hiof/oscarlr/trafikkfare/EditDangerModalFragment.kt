@@ -24,11 +24,6 @@ class EditDangerModalFragment : BottomSheetDialogFragment() {
 
         val view = inflater.inflate(R.layout.fragment_edit_danger, container, false)
         val saveButton = view.findViewById<Button>(R.id.dangerSaveButton)
-        val trafficSign = view.findViewById<ImageButton>(R.id.editDangerTrafficSign)
-        trafficSign.setImageResource(R.drawable.danger)
-
-        //Due to the fact that one can not get the ImageButton's image resource id as Int
-        trafficSign.tag = R.drawable.danger
 
         if (arguments != null) {
             val title = arguments?.getString("argTitle")
@@ -43,8 +38,7 @@ class EditDangerModalFragment : BottomSheetDialogFragment() {
                     editDangerTitle.text.toString(),
                     editDangerDescription.text.toString(),
                     editDangerRoad.text.toString(),
-                    editDangerCounty.text.toString(),
-                    trafficSign.tag as Int
+                    editDangerCounty.text.toString()
                 )
                 dismiss()
             }
@@ -59,8 +53,7 @@ class EditDangerModalFragment : BottomSheetDialogFragment() {
             title: String,
             description: String,
             road: String,
-            county: String,
-            image: Int,
+            county: String
         )
     }
 
