@@ -2,9 +2,11 @@ package no.hiof.oscarlr.trafikkfare
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import no.hiof.oscarlr.trafikkfare.db.Firestore
 
 @Suppress("DEPRECATION")

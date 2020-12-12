@@ -1,10 +1,5 @@
 package no.hiof.oscarlr.trafikkfare.model
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import no.hiof.oscarlr.trafikkfare.R
-import java.time.LocalDateTime
-
 data class News(var title: String = "",
                 var description: String = "",
                 var road: String = "",
