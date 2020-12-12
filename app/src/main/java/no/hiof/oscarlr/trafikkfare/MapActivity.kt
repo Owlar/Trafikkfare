@@ -186,12 +186,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         }
         fabMap_add.setOnClickListener {
             fabMapButtonAddClicked(fabClose, fabRotateClockwise)
-            it.shortSnackbar("Add danger to the map")
+            shortToast("Add danger to the map")
             addMarker()
         }
         fabMap_delete.setOnClickListener {
             fabMapButtonDeleteClicked(fabClose, fabRotateClockwise)
-            it.shortSnackbar("Delete danger from the map")
+            shortToast("Delete danger from the map")
             deleteMarker()
         }
     }
