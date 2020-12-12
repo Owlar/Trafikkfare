@@ -14,6 +14,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.RadioButton
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -37,12 +38,14 @@ import no.hiof.oscarlr.trafikkfare.db.Firestore
 import no.hiof.oscarlr.trafikkfare.model.ClosestStatensVegvesen
 import no.hiof.oscarlr.trafikkfare.model.Danger
 import no.hiof.oscarlr.trafikkfare.model.GasStation
+import no.hiof.oscarlr.trafikkfare.model.News
 import no.hiof.oscarlr.trafikkfare.util.SeverityLevel
 import no.hiof.oscarlr.trafikkfare.util.longToast
 import no.hiof.oscarlr.trafikkfare.util.shortSnackbar
 import no.hiof.oscarlr.trafikkfare.util.shortToast
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
+import java.time.LocalDateTime
 
 @Suppress("DEPRECATION")
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFragment.EditDangerBottomSheetListener {
@@ -345,13 +348,22 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         editDangerModal.show(supportFragmentManager, "editDangerModal")
     }
 
-    override fun saveDangerButtonClicked(editedMarkerTitle: String, editedMarkerDescription: String) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun saveDangerButtonClicked(
+        title: String,
+        description: String,
+        road: String,
+        county: String
+    ) {
         if (isConnectedToInternet()) {
-            marker.title = editedMarkerTitle
-            marker.snippet = editedMarkerDescription
+            marker.title = title
+            marker.snippet = description
             saveMarkerToList()
             addToFirestore()
             dangerNotification(severityLevel)
+
+            val news = News(title, description, road, county, LocalDateTime.now())
+            Firestore.setNews(news)
         } else
             longToast("You must be connected to internet to save a danger")
     }

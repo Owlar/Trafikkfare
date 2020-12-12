@@ -3,6 +3,7 @@ package no.hiof.oscarlr.trafikkfare.db
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import no.hiof.oscarlr.trafikkfare.model.Danger
+import no.hiof.oscarlr.trafikkfare.model.News
 
 class Firestore {
 
@@ -37,6 +38,14 @@ class Firestore {
                 }
                 Danger.setFromFirestore(dangerList)
             }
+        }
+
+        fun setNews(news: News) {
+            val firestoreDb = FirebaseFirestore.getInstance()
+            firestoreDb.collection("news")
+                .add(news)
+                .addOnSuccessListener { Log.d("TAG", "DocumentSnapshot successfully written") }
+                .addOnFailureListener { e -> Log.w("TAG", "Error writing document", e) }
         }
 
 

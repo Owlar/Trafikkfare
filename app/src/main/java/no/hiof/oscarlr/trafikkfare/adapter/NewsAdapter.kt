@@ -28,7 +28,7 @@ class NewsAdapter(private val items : ArrayList<News>) : RecyclerView.Adapter<Ne
         private val newsCountyTextView = view.news_item_county
         private val newsDescriptionTextView = view.news_item_description
         private val newsStartDateTextView = view.news_item_startDate
-        private val newsEndDateTextView = view.news_item_endDate
+        //private val newsEndDateTextView = view.news_item_endDate
 
         fun bind(item: News) {
             item.dangerPosterUrl?.let { newsPosterImageView.setImageResource(it) }
@@ -37,7 +37,7 @@ class NewsAdapter(private val items : ArrayList<News>) : RecyclerView.Adapter<Ne
             newsCountyTextView.text = item.county
             newsDescriptionTextView.text = item.description
             newsStartDateTextView.text = item.startDate.toString()
-            newsEndDateTextView.text = item.endDate.toString()
+            //newsEndDateTextView.text = "To now"
         }
     }
 

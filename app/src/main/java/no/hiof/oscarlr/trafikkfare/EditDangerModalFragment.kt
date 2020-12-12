@@ -38,21 +38,24 @@ class EditDangerModalFragment : BottomSheetDialogFragment() {
             if (editDangerTitle.text.toString().isNotEmpty() && editDangerDescription.text.toString().isNotEmpty()) {
                 editDangerBottomSheetListener.saveDangerButtonClicked(
                     editDangerTitle.text.toString(),
-                    editDangerDescription.text.toString()
+                    editDangerDescription.text.toString(),
+                    editDangerRoad.text.toString(),
+                    editDangerCounty.text.toString()
                 )
                 dismiss()
             }
             else
                 Toast.makeText(it.context, "Please fill in title and description", Toast.LENGTH_LONG).show()
         }
-
         return view
     }
 
     interface EditDangerBottomSheetListener {
         fun saveDangerButtonClicked(
-            editedMarkerTitle: String,
-            editedMarkerDescription: String
+            title: String,
+            description: String,
+            road: String,
+            county: String,
         )
     }
 
