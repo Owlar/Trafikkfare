@@ -40,7 +40,7 @@ class Firestore {
             }
         }
 
-        fun setNews(news: News) {
+        fun addNews(news: News) {
             val firestoreDb = FirebaseFirestore.getInstance()
             firestoreDb.collection("news")
                 .add(news)

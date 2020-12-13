@@ -41,7 +41,6 @@ import no.hiof.oscarlr.trafikkfare.model.GasStation
 import no.hiof.oscarlr.trafikkfare.model.News
 import no.hiof.oscarlr.trafikkfare.util.SeverityLevel
 import no.hiof.oscarlr.trafikkfare.util.longToast
-import no.hiof.oscarlr.trafikkfare.util.shortSnackbar
 import no.hiof.oscarlr.trafikkfare.util.shortToast
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -270,6 +269,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             val firestoreDb = FirebaseFirestore.getInstance()
             val dangersCollectionReference = firestoreDb.collection("dangers")
 
+            //Must be here because it uses gMap
             dangersCollectionReference.get().addOnCompleteListener {
                 if (it.isSuccessful) {
                     val dangerList = ArrayList<Danger>()
@@ -363,7 +363,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
             dangerNotification(severityLevel)
 
             val news = News(title, description, road, county, LocalDateTime.now().toString())
-            Firestore.setNews(news)
+            Firestore.addNews(news)
+            Firestore.getTheNews()
         } else
             longToast("You must be connected to internet to save a danger")
     }
@@ -407,6 +408,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EditDangerModalFrag
         super.onDestroy()
         markerList.clear()
         gMap.clear()
+
     }
 
     @AfterPermissionGranted(PERMISSION_LOCATION_ID)
