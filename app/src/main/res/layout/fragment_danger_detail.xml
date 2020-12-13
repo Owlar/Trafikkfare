@@ -42,4 +42,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dangerPosterImageView" />
 
+    <TextView
+        android:id="@+id/dangerImageAnalysisTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/danger_analysis_animals"
+        android:textColor="@color/darkRed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dangerDescriptionTextView" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

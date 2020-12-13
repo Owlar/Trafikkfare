@@ -1,22 +1,19 @@
 package no.hiof.oscarlr.trafikkfare.ml
 
-import android.content.res.Resources
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.Log
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
-import no.hiof.oscarlr.trafikkfare.R
 
 class TrafficSignAnimalAnalyzer {
 
     companion object {
         private const val TAG = "ImageAnalyzer"
 
-        fun labelImage(imageResource: Bitmap) {
+        fun labelImage(imageResource: Bitmap) : StringBuilder {
             val image : InputImage = InputImage.fromBitmap(imageResource, 0) //p1 is rotation degrees
-            val stringBuilder = StringBuilder("\n")
+            val stringBuilder = StringBuilder()
 
             val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
             labeler.process(image)
@@ -24,8 +21,7 @@ class TrafficSignAnimalAnalyzer {
                     for (label in labels) {
                         val text = label.text
                         val confidence = label.confidence
-                        val index = label.index
-                        stringBuilder.append("$index: $text - $confidence\n")
+                        stringBuilder.append("$text: $confidence ")
                     }
                     Log.d(TAG, stringBuilder.toString())
                 }
@@ -33,6 +29,7 @@ class TrafficSignAnimalAnalyzer {
                     Log.e(TAG, e.message.toString())
                 }
 
+            return stringBuilder
         }
     }
 

@@ -52,4 +52,5 @@
     <string name="county_no">Fylke</string>
     <string name="start_date_no">Startdato</string>
     <string name="present_date_no">Nåværende Dato</string>
+    <string name="danger_analysis_animals">Analyse av trafikkskiltet</string>
 </resources>

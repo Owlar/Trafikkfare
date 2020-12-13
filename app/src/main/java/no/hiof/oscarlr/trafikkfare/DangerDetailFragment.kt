@@ -9,8 +9,12 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.danger_list_item.dangerPosterImageView
 import kotlinx.android.synthetic.main.danger_list_item.dangerTitleTextView
 import kotlinx.android.synthetic.main.fragment_danger_detail.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import no.hiof.oscarlr.trafikkfare.ml.TrafficSignAnimalAnalyzer
 import no.hiof.oscarlr.trafikkfare.model.DangerCollectionData
+import no.hiof.oscarlr.trafikkfare.util.indefiniteSnackbar
 
 class DangerDetailFragment : Fragment() {
 
@@ -32,12 +36,15 @@ class DangerDetailFragment : Fragment() {
         dangerPosterImageView.setImageResource(danger.posterUrl)
         dangerDescriptionTextView.text = danger.description
 
-        useTrafficSignAnalyzerOnPoster(danger.posterUrl)
+        trafficSignAnalyzerOnPoster(danger.posterUrl)
     }
 
-    private fun useTrafficSignAnalyzerOnPoster(image: Int) {
+    private fun trafficSignAnalyzerOnPoster(image: Int) {
         val bitMap = BitmapFactory.decodeResource(context?.resources, image)
-        TrafficSignAnimalAnalyzer.labelImage(bitMap)
+        GlobalScope.launch {
+            val resultString = TrafficSignAnimalAnalyzer.labelImage(bitMap)
+            delay(500L)
+            view?.indefiniteSnackbar(resultString.toString())
+        }
     }
-
 }
