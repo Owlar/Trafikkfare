@@ -7,6 +7,6 @@ fun View.shortSnackbar(msg: CharSequence) {
     Snackbar.make(this, msg, Snackbar.LENGTH_SHORT).setAction("Action", null).show()
 }
 
-fun View.indefiniteSnackbar(msg: CharSequence) {
-    Snackbar.make(this, msg, Snackbar.LENGTH_INDEFINITE).setAction("Action", null).show()
+fun View.longSnackbar(msg: CharSequence) {
+    Snackbar.make(this, msg, Snackbar.LENGTH_LONG).setAction("Action", null).show()
 }

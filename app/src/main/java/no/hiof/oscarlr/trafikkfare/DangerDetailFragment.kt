@@ -14,7 +14,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import no.hiof.oscarlr.trafikkfare.ml.TrafficSignAnimalAnalyzer
 import no.hiof.oscarlr.trafikkfare.model.DangerCollectionData
-import no.hiof.oscarlr.trafikkfare.util.indefiniteSnackbar
+import no.hiof.oscarlr.trafikkfare.util.longSnackbar
+
 
 class DangerDetailFragment : Fragment() {
 
@@ -44,7 +45,7 @@ class DangerDetailFragment : Fragment() {
         GlobalScope.launch {
             val resultString = TrafficSignAnimalAnalyzer.labelImage(bitMap)
             delay(500L)
-            view?.indefiniteSnackbar(resultString.toString())
+            view?.longSnackbar(resultString.toString())
         }
     }
 }
