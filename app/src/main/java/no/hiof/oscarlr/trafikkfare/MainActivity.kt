@@ -21,18 +21,12 @@ class MainActivity : AppCompatActivity(), IMainActivity {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        top_app_bar?.setNavigationOnClickListener {
-            Log.d("MainActivity", "Navigate")
-        }
         top_app_bar?.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.profile -> {
                     true
                 }
                 R.id.search -> {
-                    true
-                }
-                R.id.more -> {
                     true
                 }
                 else -> false

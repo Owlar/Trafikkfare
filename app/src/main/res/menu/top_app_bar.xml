@@ -16,11 +16,4 @@
         android:contentDescription="@string/content_description_search"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/more"
-        android:icon="@drawable/ic_baseline_more_vert_24"
-        android:title="@string/more_no"
-        android:contentDescription="@string/content_description_more"
-        app:showAsAction="never" />
-
 </menu>
