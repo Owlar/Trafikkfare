@@ -14,18 +14,6 @@
         android:title="@string/dangers_no">
     </item>
     <item
-        android:id="@+id/location_dest"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_place_24"
-        android:title="@string/location_no">
-    </item>
-    <item
-        android:id="@+id/news_dest"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_announcement_24"
-        android:title="@string/news_no">
-    </item>
-    <item
         android:id="@+id/map_dest"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_map_24"
