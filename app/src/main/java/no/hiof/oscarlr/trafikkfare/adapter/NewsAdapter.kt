@@ -33,9 +33,9 @@ class NewsAdapter(private val items : ArrayList<News>) : RecyclerView.Adapter<Ne
         fun bind(item: News) {
 
             Glide.with(itemView)
-                .load(R.drawable.danger_high_resolution)
-                .error(R.drawable.danger_high_resolution)
-                .fallback(R.drawable.danger_high_resolution)
+                .load(R.drawable.annen_fare)
+                .error(R.drawable.annen_fare)
+                .fallback(R.drawable.annen_fare)
                 .into(newsPosterImageView)
 
             newsRoadTextView.text = item.road

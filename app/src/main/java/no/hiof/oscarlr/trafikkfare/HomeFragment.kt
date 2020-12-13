@@ -17,8 +17,6 @@ import no.hiof.oscarlr.trafikkfare.model.News
 class HomeFragment : Fragment() {
 
     companion object {
-        private const val HOME_TITLE = "Hjem"
-
         private lateinit var usernameTextView : TextView
         private lateinit var username : String
 
@@ -36,7 +34,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         if (activity is IMainActivity)
-            (activity as IMainActivity).setBarTitle(HOME_TITLE)
+            (activity as IMainActivity).setBarTitle("Hjem")
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
