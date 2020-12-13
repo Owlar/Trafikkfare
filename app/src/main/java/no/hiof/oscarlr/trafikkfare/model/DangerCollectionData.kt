@@ -14,24 +14,17 @@ data class DangerCollectionData(val uid : Int = 0,
        fun getDangerCollection() : ArrayList<DangerCollectionData> {
            val data = ArrayList<DangerCollectionData>()
            val posters = intArrayOf(
-               R.drawable.annen_fare,
                R.drawable.elg,
-               R.drawable.sidevind,
-               R.drawable.ski,
-               R.drawable.rasfare,
-               R.drawable.koe,
+               R.drawable.ridende,
                R.drawable.kyr,
-               R.drawable.moetende_trafikk
+               R.drawable.raadyr
+
            )
            val titles = arrayOf(
-               "Annen fare",
                "Elg",
-               "Sidevind",
-               "Skiløpere",
-               "Rasfare",
-               "Kø",
+               "Ridende",
                "Kyr",
-               "Møtende trafikk"
+               "Rådyr"
            )
            titles.forEachIndexed { index, title ->
                val aDanger = DangerCollectionData(index, title, "$title is dangerous", posters[index], 59.12478, 11.38754)

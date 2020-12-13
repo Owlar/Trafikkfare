@@ -21,12 +21,10 @@ data class News(var title: String = "",
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun getNews() : ArrayList<News> {
-            return news
-
-            /*return if (news.isNotEmpty())
+            return if (news.isNotEmpty())
                 news
             else
-                getNewsDummyData()*/
+                getNewsDummyData()
         }
 
 

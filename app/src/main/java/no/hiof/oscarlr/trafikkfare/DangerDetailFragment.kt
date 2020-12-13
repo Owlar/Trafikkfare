@@ -1,5 +1,6 @@
 package no.hiof.oscarlr.trafikkfare
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.danger_list_item.dangerPosterImageView
 import kotlinx.android.synthetic.main.danger_list_item.dangerTitleTextView
 import kotlinx.android.synthetic.main.fragment_danger_detail.*
+import no.hiof.oscarlr.trafikkfare.ml.TrafficSignAnimalAnalyzer
 import no.hiof.oscarlr.trafikkfare.model.DangerCollectionData
 
 class DangerDetailFragment : Fragment() {
@@ -29,6 +31,13 @@ class DangerDetailFragment : Fragment() {
         dangerTitleTextView.text = danger.title
         dangerPosterImageView.setImageResource(danger.posterUrl)
         dangerDescriptionTextView.text = danger.description
+
+        useTrafficSignAnalyzerOnPoster(danger.posterUrl)
+    }
+
+    private fun useTrafficSignAnalyzerOnPoster(image: Int) {
+        val bitMap = BitmapFactory.decodeResource(context?.resources, image)
+        TrafficSignAnimalAnalyzer.labelImage(bitMap)
     }
 
 }
